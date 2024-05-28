@@ -10,7 +10,7 @@
      - 시스템을 단순화하기 위해 삭제나 갱신은 할 수 없다.
    - 짧은 url을 요청했을때, 긴 url을 Redirect 한다. (API.2)
      - www.selab.com/sdkj1243 -> 긴 Url 제공
-   - 관리자 용 API인데
+   - 조회 API
       - shortUrl로 originUrl 조회 -> 70ms안에
       - originUrl로 shortUrl 조회 -> 70ms안에
 
