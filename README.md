@@ -2,14 +2,17 @@
 
 ### Feature
 
-1. 2개가 필요.
+1. 3개가 필요.
    - 사용자로부터 Request로 긴 url을 받으면, 짧은 url을 반환한다. (API.1)
      - www.selab.com/sdkj1243
      - 짧으면 짧을수록 좋다.
      - 단축 URL에는 숫자와 영문자만 사용할 수 있다.
      - 시스템을 단순화하기 위해 삭제나 갱신은 할 수 없다.
    - 짧은 url을 요청했을때, 긴 url을 Redirect 한다. (API.2)
-     - www.selab.com/sdkj1243 -> 긴 Url 제공 
+     - www.selab.com/sdkj1243 -> 긴 Url 제공
+   - 관리자 용 API인데
+      - shortUrl로 originUrl 조회 -> 70ms안에
+      - originUrl로 shortUrl 조회 -> 70ms안에
 
 2. LOGIN은 없다.
    - 대신, 특정 사용자 요청에 대해서, 최대 10번까지만 가능하다. (Rate Limiter)
