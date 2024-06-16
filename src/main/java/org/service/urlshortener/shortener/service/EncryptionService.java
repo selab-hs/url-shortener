@@ -24,9 +24,10 @@ public class EncryptionService {
     private byte[] longToBytes(long value) {
         byte[] result = new byte[8];
         for (int i = 7; i >= 0; i--) {
-            result[i] = (byte)(value & 0xFF);
+            result[i] = (byte) (value & 0xFF);
             value >>= 8;
         }
+
         return result;
     }
 
@@ -37,11 +38,12 @@ public class EncryptionService {
             if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
+
         return hexString.substring(0, 10);
     }
 
     public String encode(String stringValue) {
-        BigInteger value = new BigInteger(stringValue,16);
+        BigInteger value = new BigInteger(stringValue, 16);
         StringBuilder encoded = new StringBuilder();
 
         if (value.equals(BigInteger.ZERO)) {
@@ -62,13 +64,11 @@ public class EncryptionService {
         BigInteger value = BigInteger.ZERO;
         BigInteger base = BigInteger.valueOf(62);
 
-        // Base62 인코딩된 문자열을 디코딩
         for (int i = 0; i < encodedValue.length(); i++) {
             int index = BASE62.indexOf(encodedValue.charAt(i));
             value = value.multiply(base).add(BigInteger.valueOf(index));
         }
 
-        // 결과값을 16진수 문자열로 변환
         return value.toString(16);
     }
 }
