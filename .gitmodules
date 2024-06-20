@@ -1,0 +1,4 @@
+[submodule "src/main/resources/url-shortener-security"]
+	path = src/main/resources/url-shortener-security
+	url = https://github.com/selab-hs/url-shortener-security.git
+	branch = main
