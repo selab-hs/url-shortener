@@ -21,6 +21,12 @@ public class ShortenerService {
     private final EncryptionService encryptionService;
 
     public ShortUrlResponse createShortUrl(LongUrlRequest request) {
+
+        if(shortenerRepository.findByLongUrl(request.getLongUrl()).isPresent()){
+            var shortUrl = shortenerRepository.findByLongUrl(request.getLongUrl()).get().getShortUrl();
+            return new ShortUrlResponse(shortUrl);
+        }
+
         shortenerRepository.save(new Url(request.getLongUrl()));
         Url url = shortenerRepository.findByLongUrl(request.getLongUrl())
                 .orElseThrow(() -> new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));

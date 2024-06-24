@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class JspHealthController {
 
-    @GetMapping("/home")
+    @GetMapping("/health")
     public String home(){
-        return "home";
+        return "index";
     }
 }
