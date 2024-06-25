@@ -10,7 +10,11 @@ import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
 import org.service.urlshortener.shortener.dto.response.OriginUrlResponse;
 import org.service.urlshortener.shortener.dto.response.ShortUrlResponse;
 import org.service.urlshortener.shortener.repository.ShortenerRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -42,5 +46,12 @@ public class ShortenerService {
                 .orElseThrow(() -> new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));
 
         return new OriginUrlResponse(origin.getLongUrl());
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void removeSixMonthsOldData() {
+        LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
+        List<Url> oldDates = shortenerRepository.findByCreatedAtBefore(sixMonthsAgo);
+        shortenerRepository.deleteAll(oldDates);
     }
 }
