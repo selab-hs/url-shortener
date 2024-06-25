@@ -20,14 +20,6 @@
 <div class="container" align="center">
     <div class="col-md-4 col-me-offset-4">
         <h3 class="form-signin-heading">URL Shortener</h3>
-<%--        <%--%>
-<%--            String error = request.getParameter("error");--%>
-<%--            if(error!=null){--%>
-<%--                out.print("<div class='alert alert-danger'>");--%>
-<%--                out.print("아이디와 비밀번호를 확인해주세요.");--%>
-<%--                out.print("</div>");--%>
-<%--            }--%>
-<%--        %>--%>
         <form class="form-signin" action="/shortener" method="post">
             <div class="form-group">
                 <label class="sr-only">origin url</label>
@@ -41,11 +33,11 @@
 
         <div class="form-group">
 
-    <c:if test="${not empty shortUrl}">
-        <div class="alert alert-success mt-4">
-            <a class="form-control" href="${shortUrl}" placeholder="Click here to go to your shortened " target="_blank">URL:${shortUrl}</a>
-        </div>
-    </c:if>
+            <c:if test="${not empty shortUrl}">
+                <div class="alert alert-success mt-4">
+                    <a class="form-control" href="${shortUrl}" placeholder="Click here to go to your shortened " target="_blank">URL:${shortUrl}</a>
+                </div>
+            </c:if>
         </div>
 
     </div>
