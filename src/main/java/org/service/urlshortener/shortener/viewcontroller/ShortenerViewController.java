@@ -9,6 +9,7 @@ import org.service.urlshortener.shortener.service.ShortenerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ShortenerViewController {
 
     private final ShortenerService service;
+    public static final String URL = "http://localhost:8080/";
 
     @GetMapping("/main")
     public String home(){
@@ -27,15 +29,15 @@ public class ShortenerViewController {
     @PostMapping("/shortener")
     public String createShortenerUrl(@RequestParam("origin url") String originUrl, Model model){
         var shortUrl = service.createShortUrl(new LongUrlRequest(originUrl));
-        model.addAttribute("shortUrl", shortUrl.getShortUrl());
+        model.addAttribute("shortUrl",URL+ shortUrl.getShortUrl());
 
         return "home";
     }
 
-    @GetMapping("/origin")
-    public String getOriginUrl(@RequestParam("shortUrl") String shortUrl){
-        var originUrl = service.getOriginUrl(new ShortUrlRequest(shortUrl));
-        log.info("origin={}", originUrl.getOriginUrl());
-        return "redirect:"+originUrl.getOriginUrl();
+    @GetMapping("/{shortUrl}")
+    public String goOriginUrl(@PathVariable("shortUrl") String shortUrl){
+        var originUrl = service.getOriginUrl(new ShortUrlRequest(shortUrl.replace(URL, ""))).getOriginUrl();
+
+        return "redirect:"+originUrl;
     }
 }

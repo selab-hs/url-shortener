@@ -22,7 +22,7 @@ public class ShortenerService {
 
     public ShortUrlResponse createShortUrl(LongUrlRequest request) {
 
-        if(shortenerRepository.findByLongUrl(request.getLongUrl()).isPresent()){
+        if (shortenerRepository.findByLongUrl(request.getLongUrl()).isPresent()) {
             var shortUrl = shortenerRepository.findByLongUrl(request.getLongUrl()).get().getShortUrl();
             return new ShortUrlResponse(shortUrl);
         }
@@ -37,10 +37,9 @@ public class ShortenerService {
         return new ShortUrlResponse(shortUrl);
     }
 
-
     public OriginUrlResponse getOriginUrl(ShortUrlRequest request) {
         var origin = shortenerRepository.findByShortUrl(request.getShortUrl())
-                        .orElseThrow(() -> new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));
+                .orElseThrow(() -> new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));
 
         return new OriginUrlResponse(origin.getLongUrl());
     }

@@ -38,15 +38,16 @@
             </div>
         </form>
         <br/>
-        <form action="/origin" method="get" >
-            <div class="form-group">
-                <label class="sr-only">short url</label>
-                <input name="shortUrl" class="form-control"  placeholder="Shortened" required autofocus value=${shortUrl}>
-            </div>
-            <div>
-                <button class="btn btn-lg btn-secondary btn-block" type="submit" }>접속하기</button>
-            </div>
-        </form>
+
+        <div class="form-group">
+
+    <c:if test="${not empty shortUrl}">
+        <div class="alert alert-success mt-4">
+            <a class="form-control" href="${shortUrl}" placeholder="Click here to go to your shortened " target="_blank">URL:${shortUrl}</a>
+        </div>
+    </c:if>
+        </div>
+
     </div>
 </div>
 </body>
