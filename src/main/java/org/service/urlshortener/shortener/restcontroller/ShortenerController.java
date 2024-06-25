@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.service.urlshortener.common.response.ResponseDto;
 import org.service.urlshortener.common.response.ResponseMessage;
+import org.service.urlshortener.shortener.domain.vo.UrlDomain;
 import org.service.urlshortener.shortener.dto.request.LongUrlRequest;
 import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
 import org.service.urlshortener.shortener.service.ShortenerService;
@@ -20,7 +21,7 @@ public class ShortenerController {
 
     @PostMapping
     public ResponseEntity<?> setUrlShort(@RequestBody LongUrlRequest longUrlRequest){
-        var shortUrl = shortenerService.createShortUrl(longUrlRequest).getShortUrl();
+        var shortUrl = UrlDomain.LOCAL + shortenerService.createShortUrl(longUrlRequest).getShortUrl();
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS, shortUrl);
     }

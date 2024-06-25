@@ -3,6 +3,7 @@ package org.service.urlshortener.shortener.viewcontroller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.service.urlshortener.shortener.domain.vo.UrlDomain;
 import org.service.urlshortener.shortener.dto.request.LongUrlRequest;
 import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
 import org.service.urlshortener.shortener.service.ShortenerService;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ShortenerViewController {
 
     private final ShortenerService service;
-    public static final String URL = "http://localhost:8080/";
+
 
     @GetMapping("/main")
     public String home(){
@@ -29,14 +30,14 @@ public class ShortenerViewController {
     @PostMapping("/shortener")
     public String createShortenerUrl(@RequestParam("origin url") String originUrl, Model model){
         var shortUrl = service.createShortUrl(new LongUrlRequest(originUrl));
-        model.addAttribute("shortUrl",URL+ shortUrl.getShortUrl());
+        model.addAttribute("shortUrl", UrlDomain.LOCAL + shortUrl.getShortUrl());
 
         return "home";
     }
 
     @GetMapping("/{shortUrl}")
     public String goOriginUrl(@PathVariable("shortUrl") String shortUrl){
-        var originUrl = service.getOriginUrl(new ShortUrlRequest(shortUrl.replace(URL, ""))).getOriginUrl();
+        var originUrl = service.getOriginUrl(new ShortUrlRequest(shortUrl.replace(UrlDomain.LOCAL, ""))).getOriginUrl();
 
         return "redirect:"+originUrl;
     }
