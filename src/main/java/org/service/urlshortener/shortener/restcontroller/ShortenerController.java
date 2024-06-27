@@ -32,7 +32,7 @@ public class ShortenerController {
     public ResponseEntity<?> createShortUrl(
             @RequestBody OriginUrlRequest originUrlRequest
     ) {
-        var shortUrl = UrlDomain.LOCAL + shortenerService.createShortUrl(originUrlRequest).getShortUrl();
+        var shortUrl = UrlDomain.URL + shortenerService.createShortUrl(originUrlRequest).getShortUrl();
         log.debug("short={}", shortUrl);
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS, shortUrl);
@@ -53,7 +53,7 @@ public class ShortenerController {
     ) throws IOException {
         var originUrl =
                 shortenerService.getOriginUrl(
-                        new ShortUrlRequest(shortUrl.replace(UrlDomain.LOCAL, ""))).getOriginUrl();
+                        new ShortUrlRequest(shortUrl.replace(UrlDomain.URL, ""))).getOriginUrl();
         log.debug("originUrl = {}", originUrl);
 
         response.sendRedirect(originUrl);

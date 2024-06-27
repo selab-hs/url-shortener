@@ -47,10 +47,7 @@ public class ShortenerService {
     @Transactional(readOnly = true)
     public OriginUrlResponse getOriginUrl(ShortUrlRequest request) {
         var origin = originUrlRepository.findById(encryptionService.decode(request.getShortUrl()))
-                .orElseThrow(() -> {
-                    log.error("error={}", ErrorMessage.NOT_FOUND_URL);
-                    return new NotFoundUrl(ErrorMessage.NOT_FOUND_URL);
-                });
+                .orElseThrow(() ->new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));
 
         return new OriginUrlResponse(origin.getOriginUrl());
     }
