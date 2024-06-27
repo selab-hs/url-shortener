@@ -15,6 +15,7 @@ public class RateLimitService {
     private final RedisTemplate<String, String> redisTemplate;
 
     public boolean tryConsume(String clientId) {
+        log.info("redis 시작");
         String key = "rate_limit:" + clientId;
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         Long currentCount = ops.increment(key, 1);
@@ -22,6 +23,7 @@ public class RateLimitService {
         if (currentCount == 1) {
             redisTemplate.expire(key, Duration.ofMinutes(2));
         }
+        log.info("redis 종료");
 
         return currentCount <= 10;
     }
