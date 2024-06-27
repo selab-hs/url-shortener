@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ShortUrlResponse {
-    String shortUrl;
+    private String shortUrl;
 }
