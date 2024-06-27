@@ -3,6 +3,7 @@ package org.service.urlshortener.ratelimit.interceptor;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.service.urlshortener.error.dto.ErrorMessage;
 import org.service.urlshortener.error.exception.url.RateLimitExceeded;
@@ -19,7 +20,7 @@ public class ClientIdInterceptor implements HandlerInterceptor {
     private final RateLimitService rateLimitService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, Object handler) {
         var clientId = getClientIdFromCookie(request, response);
 
         if (!rateLimitService.tryConsume(clientId)) {

@@ -1,9 +1,10 @@
 package org.service.urlshortener.error.dto;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ErrorMessage {
-
 
     /*
     * 서버 내부 오류
@@ -19,13 +20,5 @@ public enum ErrorMessage {
     ErrorMessage(HttpStatus status, String message){
         this.status = status;
         this.message = message;
-    }
-
-    public HttpStatus getStatus(){
-        return status;
-    }
-
-    public String getMessage(){
-        return message;
     }
 }
