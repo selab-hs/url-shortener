@@ -1,9 +1,9 @@
 package org.service.urlshortener.config.dataBase;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
-@EnableJpaRepositories
-public class JPAConfig {
+@EnableJpaAuditing
+public class JpaConfig {
 }
