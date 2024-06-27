@@ -19,7 +19,10 @@ public class RateLimitService {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         Long currentCount = ops.increment(key, 1);
 
-        if (currentCount == null || currentCount == 1) {
+        if (currentCount == null) {
+            currentCount = 1L;
+            redisTemplate.expire(key, Duration.ofMinutes(2));
+        } else if (currentCount == 1) {
             redisTemplate.expire(key, Duration.ofMinutes(2));
         }
 
