@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LongUrlRequest {
-    private String longUrl;
+public class OriginUrlRequest {
+    private String originUrl;
 }

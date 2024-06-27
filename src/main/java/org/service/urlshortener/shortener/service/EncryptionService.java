@@ -1,74 +1,46 @@
 package org.service.urlshortener.shortener.service;
 
-import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class EncryptionService {
 
-    private static final String BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    @Value("${security.base62}")
+    private String BASE62;
 
-    public String hashLong(long value) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = digest.digest(longToBytes(value));
-            return bytesToHex(hashedBytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to hash data", e);
+    /**
+     *
+     * Base62 로 엔코드
+     *
+     * @param index - db 인덱스
+     * @return String type으로 암호한 code 반환
+     */
+    public String encode(long index) {
+        StringBuilder sb = new StringBuilder();
+        while (index > 0) {
+            sb.append(BASE62.charAt((int) (index % 62)));
+            index /= 62;
         }
+        return sb.reverse().toString();
     }
 
-    private byte[] longToBytes(long value) {
-        byte[] result = new byte[8];
-        for (int i = 7; i >= 0; i--) {
-            result[i] = (byte) (value & 0xFF);
-            value >>= 8;
+    /**
+     *
+     * Base62 로 디코드
+     *
+     * @param code
+     * @return long type으로 db 인덱스 반환
+     */
+    public long decode(String code) {
+        long result = 0;
+        long power = 1;
+        for (int i = code.length() - 1; i >= 0; i--) {
+            int index = BASE62.indexOf(code.charAt(i));
+            result += index * power;
+            power *= 62;
         }
-
         return result;
-    }
-
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : bytes) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-
-        return hexString.substring(0, 10);
-    }
-
-    public String encode(String stringValue) {
-        BigInteger value = new BigInteger(stringValue, 16);
-        StringBuilder encoded = new StringBuilder();
-
-        if (value.equals(BigInteger.ZERO)) {
-            return String.valueOf(BASE62.charAt(0));
-        }
-
-        while (value.compareTo(BigInteger.ZERO) > 0) {
-            BigInteger[] quotientAndRemainder = value.divideAndRemainder(BigInteger.valueOf(62));
-            int remainder = quotientAndRemainder[1].intValue();
-            encoded.append(BASE62.charAt(remainder));
-            value = quotientAndRemainder[0];
-        }
-
-        return encoded.reverse().toString();
-    }
-
-    public String decode(String encodedValue) {
-        BigInteger value = BigInteger.ZERO;
-        BigInteger base = BigInteger.valueOf(62);
-
-        for (int i = 0; i < encodedValue.length(); i++) {
-            int index = BASE62.indexOf(encodedValue.charAt(i));
-            value = value.multiply(base).add(BigInteger.valueOf(index));
-        }
-
-        return value.toString(16);
     }
 }
