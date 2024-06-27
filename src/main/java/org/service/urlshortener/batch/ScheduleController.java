@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Slf4j
 @RequiredArgsConstructor
 public class ScheduleController {
-    private ScheduleService service;
+    private final ScheduleService service;
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void runRemoveSixMonthsOldData() {

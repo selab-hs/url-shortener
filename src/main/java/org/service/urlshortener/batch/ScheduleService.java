@@ -11,11 +11,11 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class  ScheduleService{
-    private final OriginUrlRepository urlRepository;
+    private final OriginUrlRepository OriginUrlRepository;
 
     public void removeSixMonthsOldData() {
         LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
-        List<OriginUrl> oldDates = urlRepository.findByCreatedAtBefore(sixMonthsAgo);
-        urlRepository.deleteAll(oldDates);
+        List<OriginUrl> oldDates = OriginUrlRepository.findByCreatedAtBefore(sixMonthsAgo);
+        OriginUrlRepository.deleteAll(oldDates);
     }
 }

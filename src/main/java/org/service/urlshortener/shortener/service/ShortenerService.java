@@ -28,10 +28,14 @@ public class ShortenerService {
      */
     @Transactional
     public ShortUrlResponse createShortUrl(OriginUrlRequest request) {
-        OriginUrl url = originUrlRepository.save(new OriginUrl(request.getOriginUrl()));
-        String shortUrl = encryptionService.encode(url.getId());
 
-        return new ShortUrlResponse(shortUrl);
+        if(originUrlRepository.existsByOriginUrl(request.getOriginUrl())){
+            Long id = originUrlRepository.findByOriginUrl(request.getOriginUrl()).get().getId();
+            return new ShortUrlResponse(encryptionService.encode(id));
+        }
+        OriginUrl url = originUrlRepository.save(new OriginUrl(request.getOriginUrl()));
+
+        return new ShortUrlResponse( encryptionService.encode(url.getId()));
     }
 
     /**
