@@ -17,8 +17,7 @@
                     url: '/api/v1/short', // API 경로
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ "originUrl": originUrl }),
-                    dataType:'json',// 요청 JSON 형태로 만들기
+                    data: JSON.stringify({ "originUrl": originUrl }), // 요청 JSON 형태로 만들기
                     success: function(response) {
                         // 응답 처리: 단축 URL을 링크로 표시
                         if(response.data) {
