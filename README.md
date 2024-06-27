@@ -1,6 +1,6 @@
 # ✂️ url-shortner
 
-**✂️긴 URL 을 짧은 URL로 변환하는 서비스 입니다.**   
+> **긴 URL 을 짧은 URL로 변환하는 서비스 입니다.**   
 
 ## 📌 화면 구성
 <p align="center">
