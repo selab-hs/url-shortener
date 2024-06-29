@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ShortenerService {
-
     private final OriginUrlRepository originUrlRepository;
     private final EncryptionService encryptionService;
 
@@ -28,27 +27,29 @@ public class ShortenerService {
      */
     @Transactional
     public ShortUrlResponse createShortUrl(OriginUrlRequest request) {
-
-        if(originUrlRepository.existsByOriginUrl(request.getOriginUrl())){
+        if (originUrlRepository.existsByOriginUrl(request.getOriginUrl())) {
             Long id = originUrlRepository.findByOriginUrl(request.getOriginUrl()).get().getId();
             return new ShortUrlResponse(encryptionService.encode(id));
         }
         OriginUrl url = originUrlRepository.save(new OriginUrl(request.getOriginUrl()));
 
-        return new ShortUrlResponse( encryptionService.encode(url.getId()));
+        return new ShortUrlResponse(encryptionService.encode(url.getId()));
     }
 
     /**
      * shortUrl -> originUrl 변화는 서비스
+     *
      * @param request 는 리다이렉드 할 shortUrl
      * @return OriginUrlResp
      * @throws NotFoundUrlException 유효하지 않은 shotUrl 이 요청 되었을 경우
      */
     @Transactional(readOnly = true)
     public OriginUrlResponse getOriginUrl(ShortUrlRequest request) {
-        var origin = originUrlRepository.findById(encryptionService.decode(request.getShortUrl()))
-                .orElseThrow(() ->new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
+        var originUrlId = encryptionService.decode(request.getShortUrl());
 
-        return new OriginUrlResponse(origin.getOriginUrl());
+        var originUrl = originUrlRepository.findById(originUrlId)
+                .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
+
+        return new OriginUrlResponse(originUrl.getOriginUrl());
     }
 }
