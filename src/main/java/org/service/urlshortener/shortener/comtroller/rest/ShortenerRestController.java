@@ -1,4 +1,4 @@
-package org.service.urlshortener.shortener.restcontroller;
+package org.service.urlshortener.shortener.comtroller.rest;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class ShortenerController {
-
+public class ShortenerRestController {
     private final ShortenerService shortenerService;
 
     /**
@@ -49,9 +48,10 @@ public class ShortenerController {
             @PathVariable("shortUrl") String shortUrl,
             HttpServletResponse response
     ) throws IOException {
-        var originUrl =
-                shortenerService.getOriginUrl(
-                        new ShortUrlRequest(shortUrl.replace(UrlDomain.URL, ""))).getOriginUrl();
+        var originUrl = shortenerService.getOriginUrl(
+                new ShortUrlRequest(shortUrl.replace(UrlDomain.URL, ""))
+        ).getOriginUrl();
+        
         log.debug("originUrl = {}", originUrl);
 
         response.sendRedirect(originUrl);
