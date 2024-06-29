@@ -51,9 +51,9 @@
                             '</div>';
                         $('.form-group').after(alertSuccess);
                     },
-                    error: function() {
+                    error: function(response) {
                         $('.alert').remove();
-                        var alertError = '<div class="alert alert-danger mt-4">Error creating short URL.</div>';
+                        var alertError = '<div class="alert alert-danger mt-4">'+response.message+'</div>';
                         $('.form-group').after(alertError);
                     }
                 });
