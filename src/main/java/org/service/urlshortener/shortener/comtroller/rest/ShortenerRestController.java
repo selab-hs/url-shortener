@@ -50,7 +50,9 @@ public class ShortenerRestController {
             HttpServletResponse response
     ) throws IOException {
         log.debug("shortUrl = {}", shortCode);
-        var originUrl = shortenerService.getOriginUrl(new ShortCodeRequest(shortCode)).getOriginUrl();
+        var originUrl = shortenerService.getOriginUrl(
+                new ShortCodeRequest(shortCode.replace(UrlDomain.URL,""))
+        ).getOriginUrl();
         log.debug("originUrl = {}", originUrl);
 
         response.sendRedirect(originUrl);
