@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HealthController {
-    @GetMapping("healths")
+public class HealthRestController {
+    @GetMapping("/api/v1/health")
     public ResponseEntity<?> getHealth() {
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS, "health good~~!");
     }
