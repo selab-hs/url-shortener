@@ -7,10 +7,11 @@ import org.service.urlshortener.common.response.ResponseDto;
 import org.service.urlshortener.common.response.ResponseMessage;
 import org.service.urlshortener.shortener.domain.vo.UrlDomain;
 import org.service.urlshortener.shortener.dto.request.OriginUrlRequest;
-import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
+import org.service.urlshortener.shortener.dto.request.ShortCodeRequest;
 import org.service.urlshortener.shortener.service.ShortenerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class ShortenerRestController {
     public ResponseEntity<?> createShortUrl(
             @RequestBody OriginUrlRequest originUrlRequest
     ) {
-        var shortUrl = UrlDomain.URL + shortenerService.createShortUrl(originUrlRequest).getShortUrl();
+        var shortUrl = UrlDomain.URL + shortenerService.createShortUrl(originUrlRequest).getShortCode();
         log.debug("short={}", shortUrl);
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS, shortUrl);
@@ -39,21 +40,27 @@ public class ShortenerRestController {
     /**
      * Short Url 요청을 Origin Url 로 리다이렉트하는 API
      *
-     * @param shortUrl
+     * @param shortCode
      * @param response
      * @throws IOException
      */
-    @GetMapping("{shortUrl}")
+    @GetMapping("{shortCode}")
     public void getOriginUrl(
-            @PathVariable("shortUrl") String shortUrl,
+            @PathVariable("shortCode") String shortCode,
             HttpServletResponse response
     ) throws IOException {
-        var originUrl = shortenerService.getOriginUrl(
-                new ShortUrlRequest(shortUrl.replace(UrlDomain.URL, ""))
-        ).getOriginUrl();
-        
+        log.debug("shortUrl = {}", shortCode);
+        var originUrl = shortenerService.getOriginUrl(new ShortCodeRequest(shortCode)).getOriginUrl();
         log.debug("originUrl = {}", originUrl);
 
         response.sendRedirect(originUrl);
+    }
+
+    /**
+     * 메인 페이지로 리다이렉드하는 API
+     */
+    @GetMapping()
+    public RedirectView getPage() {
+        return new RedirectView("/main");
     }
 }

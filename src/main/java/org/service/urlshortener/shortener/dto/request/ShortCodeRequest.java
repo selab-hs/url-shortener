@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShortUrlRequest {
-    private String shortUrl;
+public class ShortCodeRequest {
+    private String shortCode;
 }
