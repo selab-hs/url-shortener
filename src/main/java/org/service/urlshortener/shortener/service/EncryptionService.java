@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EncryptionService {
-
     @Value("${security.base62}")
     private String BASE62;
 
     /**
-     *
      * Base62 로 엔코드
      *
      * @param index - db 인덱스
@@ -27,7 +25,6 @@ public class EncryptionService {
     }
 
     /**
-     *
      * Base62 로 디코드
      *
      * @param code

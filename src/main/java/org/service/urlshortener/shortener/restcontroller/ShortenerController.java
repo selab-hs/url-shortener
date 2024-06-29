@@ -22,7 +22,6 @@ public class ShortenerController {
     private final ShortenerService shortenerService;
 
     /**
-     *
      * Origin Url 을 Short Url 로 변환하는 API
      *
      * @param originUrlRequest
@@ -39,8 +38,7 @@ public class ShortenerController {
     }
 
     /**
-     *
-     *  Short Url 요청을 Origin Url 로 리다이렉트하는 API
+     * Short Url 요청을 Origin Url 로 리다이렉트하는 API
      *
      * @param shortUrl
      * @param response

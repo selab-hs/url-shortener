@@ -10,7 +10,6 @@ import org.service.urlshortener.common.entity.BaseEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class OriginUrl extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "url_generator")
     @SequenceGenerator(name = "url_generator", sequenceName = "url_id", initialValue = 20000, allocationSize = 1)

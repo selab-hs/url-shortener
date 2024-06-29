@@ -1,5 +1,6 @@
-package org.service.urlshortener.batch;
+package org.service.urlshortener.batch.job;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.service.urlshortener.shortener.domain.OriginUrl;
 import org.service.urlshortener.shortener.repository.OriginUrlRepository;
@@ -10,9 +11,10 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class  ScheduleService{
+public class UrlDeleteJob {
     private final OriginUrlRepository OriginUrlRepository;
 
+    @Transactional
     public void removeSixMonthsOldData() {
         LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
         List<OriginUrl> oldDates = OriginUrlRepository.findByCreatedAtBefore(sixMonthsAgo);

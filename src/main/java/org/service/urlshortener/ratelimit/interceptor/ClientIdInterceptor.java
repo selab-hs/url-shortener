@@ -7,7 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.service.urlshortener.error.dto.ErrorMessage;
-import org.service.urlshortener.error.exception.url.RateLimitExceeded;
+import org.service.urlshortener.error.exception.url.RateLimitExceededException;
 import org.service.urlshortener.ratelimit.service.RateLimitService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,7 +28,7 @@ public class ClientIdInterceptor implements HandlerInterceptor {
 
         if (!rateLimitService.tryConsume(clientId)) {
             log.info("인터셉트 횟수 오류");
-            throw new RateLimitExceeded(ErrorMessage.RATE_LIMIT_EXCEEDED);
+            throw new RateLimitExceededException(ErrorMessage.RATE_LIMIT_EXCEEDED);
         }
 
         log.info("인터셉트 종료");

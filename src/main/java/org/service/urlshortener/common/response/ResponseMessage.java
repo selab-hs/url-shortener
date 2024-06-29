@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ResponseMessage {
-    SUCCESS(HttpStatus.OK,"SUCCESS"),
+    SUCCESS(HttpStatus.OK, "SUCCESS"),
     ;
 
     private final HttpStatus status;
@@ -15,5 +15,4 @@ public enum ResponseMessage {
         this.status = status;
         this.message = message;
     }
-
 }

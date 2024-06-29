@@ -3,6 +3,7 @@ plugins {
     id 'war'
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'org.service'
@@ -48,6 +49,7 @@ dependencies {
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // jsp 사용시 필수 요소
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.named('test') {

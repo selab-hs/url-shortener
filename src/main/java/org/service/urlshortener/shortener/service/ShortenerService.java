@@ -3,7 +3,7 @@ package org.service.urlshortener.shortener.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.service.urlshortener.error.dto.ErrorMessage;
-import org.service.urlshortener.error.exception.url.NotFoundUrl;
+import org.service.urlshortener.error.exception.url.NotFoundUrlException;
 import org.service.urlshortener.shortener.domain.OriginUrl;
 import org.service.urlshortener.shortener.dto.request.OriginUrlRequest;
 import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
@@ -42,12 +42,12 @@ public class ShortenerService {
      * shortUrl -> originUrl 변화는 서비스
      * @param request 는 리다이렉드 할 shortUrl
      * @return OriginUrlResp
-     * @throws NotFoundUrl 유효하지 않은 shotUrl 이 요청 되었을 경우
+     * @throws NotFoundUrlException 유효하지 않은 shotUrl 이 요청 되었을 경우
      */
     @Transactional(readOnly = true)
     public OriginUrlResponse getOriginUrl(ShortUrlRequest request) {
         var origin = originUrlRepository.findById(encryptionService.decode(request.getShortUrl()))
-                .orElseThrow(() ->new NotFoundUrl(ErrorMessage.NOT_FOUND_URL));
+                .orElseThrow(() ->new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
         return new OriginUrlResponse(origin.getOriginUrl());
     }

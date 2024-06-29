@@ -14,7 +14,7 @@ public class ShortenerViewController {
      * @return (main.jsp) 메인 화면을 반환합니다.
      */
     @GetMapping("/main")
-    public String page(){
+    public String page() {
         return "main";
     }
 }

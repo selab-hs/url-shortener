@@ -1,4 +1,4 @@
-package org.service.urlshortener.config.dataBase;
+package org.service.urlshortener.config.database;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

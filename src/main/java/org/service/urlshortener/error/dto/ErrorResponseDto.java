@@ -15,13 +15,9 @@ public class ErrorResponseDto {
         this.serverDateTime = LocalDateTime.now();
     }
 
-    public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message){
+    public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message) {
         return ResponseEntity
-            .status(
-                message.getStatus()
-            )
-            .body(
-                new ErrorResponseDto(message.name())
-            );
+                .status(message.getStatus())
+                .body(new ErrorResponseDto(message.name()));
     }
 }
