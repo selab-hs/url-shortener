@@ -6,9 +6,9 @@ import org.service.urlshortener.error.dto.ErrorMessage;
 import org.service.urlshortener.error.exception.url.NotFoundUrlException;
 import org.service.urlshortener.shortener.domain.OriginUrl;
 import org.service.urlshortener.shortener.dto.request.OriginUrlRequest;
-import org.service.urlshortener.shortener.dto.request.ShortUrlRequest;
+import org.service.urlshortener.shortener.dto.request.ShortCodeRequest;
 import org.service.urlshortener.shortener.dto.response.OriginUrlResponse;
-import org.service.urlshortener.shortener.dto.response.ShortUrlResponse;
+import org.service.urlshortener.shortener.dto.response.ShortCodeResponse;
 import org.service.urlshortener.shortener.repository.OriginUrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,14 +25,14 @@ public class ShortenerService {
      * @return originUrl -> shortUrl 로 변환 값을 'ShortUrlResponse' 로 반환합니다.
      */
     @Transactional
-    public ShortUrlResponse createShortUrl(OriginUrlRequest request) {
+    public ShortCodeResponse createShortUrl(OriginUrlRequest request) {
         if (originUrlRepository.existsByOriginUrl(request.getOriginUrl())) {
             Long id = originUrlRepository.findByOriginUrl(request.getOriginUrl()).get().getId();
-            return new ShortUrlResponse(encryptionService.encode(id));
+            return new ShortCodeResponse(encryptionService.encode(id));
         }
         OriginUrl url = originUrlRepository.save(new OriginUrl(request.getOriginUrl()));
 
-        return new ShortUrlResponse(encryptionService.encode(url.getId()));
+        return new ShortCodeResponse(encryptionService.encode(url.getId()));
     }
 
     /**
@@ -43,9 +43,8 @@ public class ShortenerService {
      * @throws NotFoundUrlException 유효하지 않은 shotUrl 이 요청 되었을 경우
      */
     @Transactional(readOnly = true)
-    public OriginUrlResponse getOriginUrl(ShortUrlRequest request) {
-        var originUrlId = encryptionService.decode(request.getShortUrl());
-
+    public OriginUrlResponse getOriginUrl(ShortCodeRequest request) {
+        var originUrlId = encryptionService.decode(request.getShortCode());
         var originUrl = originUrlRepository.findById(originUrlId)
                 .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
