@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponseDto> handleBusinessException(BusinessException e) {
-        log.error("BusinessException", e.getCause());
+        log.error("BusinessException", e.getMessage());
         ErrorMessage errorMessage = e.getErrorMessage();
         return ErrorResponseDto.of(errorMessage);
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponseDto> handleException(Exception e) {
-        log.error("Exception", e.getCause());
+        log.error("Exception", e.getMessage());
         return ErrorResponseDto.of(ErrorMessage.INTERNAL_SERVER_ERROR);
     }
 }

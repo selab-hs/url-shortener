@@ -16,24 +16,12 @@ public class RateLimitService {
 
     public boolean tryConsume(String clientId) {
         String key = "rate_limit:" + clientId;
-        log.info("key : {}", key);
-        log.info("redis 시작");
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        Long currentCount = null;
+        var currentCount = ops.increment(key, 1);
 
-        try {
-            currentCount = ops.increment(key, 1);
-            log.info("currentCount : {}", currentCount);
-
-            if (currentCount == 1) {
-                redisTemplate.expire(key, Duration.ofMinutes(2));
-                log.info("expire 설정");
-            }
-        } catch (Exception e) {
-            log.error("Redis 작업 중 오류 발생: {}", e.getMessage(), e);
+        if (currentCount == 1) {
+            redisTemplate.expire(key, Duration.ofMinutes(2));
         }
-
-        log.info("redis 종료");
 
         return currentCount <= 10;
     }

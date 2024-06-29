@@ -23,15 +23,12 @@ public class ClientIdInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, Object handler) {
-        log.info("인터셉트 시작");
         var clientId = getClientIdFromCookie(request, response);
 
         if (!rateLimitService.tryConsume(clientId)) {
-            log.info("인터셉트 횟수 오류");
             throw new RateLimitExceededException(ErrorMessage.RATE_LIMIT_EXCEEDED);
         }
 
-        log.info("인터셉트 종료");
         return true;
     }
 
