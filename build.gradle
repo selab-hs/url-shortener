@@ -43,13 +43,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    /** jsp */
-    implementation 'jakarta.servlet:jakarta.servlet-api'
-    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
-    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // jsp 사용시 필수 요소
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    /** thymeleaf */
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
