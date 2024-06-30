@@ -68,11 +68,3 @@ jobs:
           sudo docker stop server || true
           sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener
           docker image prune -f
-
-    - name: Deploy Spring Boot Application
-      run: |
-        nohup java -jar /path/to/your/application.jar > stdout.log 2> stderr.log &
-    
-    - name: Retrieve logs
-      run: |
-        ssh ec2-user@${{ secrets.HOST_PROD }} 'echo "STDOUT:" && sudo tail -n 100 /var/log/docker.log && echo "STDERR:" && sudo tail -n 100 /var/log/docker.err'
