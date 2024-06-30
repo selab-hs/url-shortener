@@ -16,6 +16,8 @@ public enum ErrorMessage {
     RATE_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "요청 횟수 초과"),
 
     NOT_FINISH_DELETE_SIX_MONTHS_OLD_DATA(HttpStatus.NO_CONTENT, "6개월이 지난 데이터 삭제 실패"),
+
+    INVALID_JSON_DATA_ERROR(HttpStatus.BAD_REQUEST, "json data error"),
     ;
     private final HttpStatus status;
     private final String message;
@@ -24,4 +26,5 @@ public enum ErrorMessage {
         this.status = status;
         this.message = message;
     }
+
 }
