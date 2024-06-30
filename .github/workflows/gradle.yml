@@ -56,7 +56,7 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/url-shortener .
         docker push ${{ secrets.DOCKER_USERNAME }}/url-shortener
 
-    - name: Deploy
+    - name: Deploy and Start Spring Boot Application
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST_PROD }}
@@ -64,8 +64,15 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         envs: GITHUB_SHA
         script: |
-          sudo docker ps
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/url-shortener
           sudo docker stop server || true
           sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener
           docker image prune -f
+
+    - name: Deploy Spring Boot Application
+      run: |
+        nohup java -jar /path/to/your/application.jar > stdout.log 2> stderr.log &
+    
+    - name: Retrieve logs
+      run: |
+        ssh ec2-user@${{ secrets.HOST_PROD }} 'echo "STDOUT:" && sudo tail -n 100 /var/log/docker.log && echo "STDERR:" && sudo tail -n 100 /var/log/docker.err'
