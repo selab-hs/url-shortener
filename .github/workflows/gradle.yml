@@ -2,9 +2,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [  ]
+    branches: [ "main" ]
   pull_request:
-    branches: [  ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -48,23 +48,24 @@ jobs:
         gradle-version: 8.5
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build -x test  # 이후 진행 예정
+      run: ./gradlew build
+        
+    - name: Build Docker Image For Spring
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/url-shortener .
+        docker push ${{ secrets.DOCKER_USERNAME }}/url-shortener
 
-  dependency-submission:
-
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
+    - name: Deploy
+      uses: appleboy/ssh-action@master
       with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-    # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+        host: ${{ secrets.HOST_PROD }}
+        username: ec2-user
+        key: ${{ secrets.PRIVATE_KEY }}
+        envs: GITHUB_SHA
+        script: |
+          sudo docker ps
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/url-shortener
+          sudo docker stop server || true
+          sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener
+          docker image prune -f
