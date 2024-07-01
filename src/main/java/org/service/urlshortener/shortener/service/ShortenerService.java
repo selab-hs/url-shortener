@@ -2,9 +2,12 @@ package org.service.urlshortener.shortener.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.service.urlshortener.cache.CacheFactory;
+import org.service.urlshortener.cache.CacheService;
 import org.service.urlshortener.error.dto.ErrorMessage;
 import org.service.urlshortener.error.exception.url.NotFoundUrlException;
 import org.service.urlshortener.shortener.domain.OriginUrl;
+import org.service.urlshortener.shortener.dto.ShortUrlModel;
 import org.service.urlshortener.shortener.dto.request.OriginUrlRequest;
 import org.service.urlshortener.shortener.dto.request.ShortCodeRequest;
 import org.service.urlshortener.shortener.dto.response.OriginUrlResponse;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ShortenerService {
     private final OriginUrlRepository originUrlRepository;
+    private final CacheService cacheService;
     private final EncryptionService encryptionService;
 
     /**
@@ -26,11 +30,15 @@ public class ShortenerService {
      */
     @Transactional
     public ShortCodeResponse createShortUrl(OriginUrlRequest request) {
-        if (originUrlRepository.existsByOriginUrl(request.getOriginUrl())) {
-            Long id = originUrlRepository.findByOriginUrl(request.getOriginUrl()).get().getId();
-            return new ShortCodeResponse(encryptionService.encode(id));
-        }
         OriginUrl url = originUrlRepository.save(new OriginUrl(request.getOriginUrl()));
+        cacheService
+                .asyncSet(CacheFactory
+                                .makeCachedQuiz(
+                                        url.getId()),
+                        new ShortUrlModel(
+                                url.getId(),
+                                url.getOriginUrl(),
+                                url.getCreatedAt()));
 
         return new ShortCodeResponse(encryptionService.encode(url.getId()));
     }
@@ -45,9 +53,15 @@ public class ShortenerService {
     @Transactional(readOnly = true)
     public OriginUrlResponse getOriginUrl(ShortCodeRequest request) {
         var originUrlId = encryptionService.decode(request.getShortCode());
-        var originUrl = originUrlRepository.findById(originUrlId)
-                .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
+        var cache = CacheFactory.makeCachedQuiz(originUrlId);
+        var resultUrl = cacheService.get(cache, () -> {
+            var findUrl = originUrlRepository
+                    .findById(originUrlId)
+                    .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
-        return new OriginUrlResponse(originUrl.getOriginUrl());
+            return new ShortUrlModel(findUrl.getId(), findUrl.getOriginUrl(), findUrl.getCreatedAt());
+        });
+
+        return new OriginUrlResponse(resultUrl.getOriginalUrl());
     }
 }
