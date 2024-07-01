@@ -47,13 +47,13 @@
                     success: function(response) {
                         $('.alert').remove();
                         var alertSuccess = '<div class="alert alert-success mt-4">' +
-                            '<a class="form-control" href="/' + response.data.replace("http://localhost:8080/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
+                            '<a class="form-control" href="/' + response.data.replace("https://readys.link/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
                             '</div>';
                         $('.form-group').after(alertSuccess);
                     },
-                    error: function() {
+                    error: function(response) {
                         $('.alert').remove();
-                        var alertError = '<div class="alert alert-danger mt-4">Error creating short URL.</div>';
+                        var alertError = '<div class="alert alert-danger mt-4">'+JSON.parse(response.responseText).message+'</div>';
                         $('.form-group').after(alertError);
                     }
                 });
