@@ -64,7 +64,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         envs: GITHUB_SHA
         script: |
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/url-shortener
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/url-shortener:latest
           sudo docker stop server || true
-          sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener
-          docker image prune -f
+          sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener:latest
+          sudo docker image prune -f
