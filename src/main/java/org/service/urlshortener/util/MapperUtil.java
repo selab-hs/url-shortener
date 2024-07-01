@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.service.urlshortener.error.dto.ErrorMessage;
 import org.service.urlshortener.error.exception.InvalidJsonDataException;
@@ -18,7 +17,11 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS
 public class MapperUtil {
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public static ObjectMapper mapper(){
+    /**
+     * @return ObjectMapper
+     * @apiNote object mapper
+     **/
+    public static ObjectMapper mapper() {
         var deserializationFeature = DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
         var serializationFeature = SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
@@ -32,19 +35,19 @@ public class MapperUtil {
         mapper
                 .registerModule(new JavaTimeModule())
                 .disable(WRITE_DATES_AS_TIMESTAMPS);
+
         return mapper;
     }
 
-    public static String writeValueAsString(Object object){
-        try{
-            return mapper.writeValueAsString(object);
-        }catch (JsonProcessingException e){
-            log.error("[ERROR] Exception ->{}", e.getMessage());
+    public static String writeValueAsString(Object object) {
+        try {
+            return mapper().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.error("[ERROR] Exception -> {}", e.getMessage());
             throw new InvalidJsonDataException(ErrorMessage.INVALID_JSON_DATA_ERROR);
         }
     }
 
-    @SneakyThrows
     public static <T> T readValue(String json, TypeReference<T> typeReference) {
         try {
             return mapper().readValue(json, typeReference);
@@ -54,9 +57,9 @@ public class MapperUtil {
         }
     }
 
-    @SneakyThrows
     public static <T> T readValue(String json, Class<T> clazz) {
         try {
+            log.info("json = {}", json);
             return mapper().readValue(json, clazz);
         } catch (JsonProcessingException e) {
             log.error("[ERROR] Exception -> {}", e.getMessage());

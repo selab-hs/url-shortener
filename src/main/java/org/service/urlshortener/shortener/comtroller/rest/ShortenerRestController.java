@@ -49,7 +49,7 @@ public class ShortenerRestController {
             @PathVariable("shortCode") String shortCode,
             HttpServletResponse response
     ) throws IOException {
-        log.debug("shortUrl = {}", shortCode);
+        log.debug("shortCode = {}", shortCode);
         var originUrl = shortenerService.getOriginUrl(new ShortCodeRequest(shortCode)).getOriginUrl();
         log.debug("originUrl = {}", originUrl);
 

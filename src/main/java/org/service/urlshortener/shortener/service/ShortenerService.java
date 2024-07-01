@@ -2,8 +2,6 @@ package org.service.urlshortener.shortener.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Not;
-import org.service.urlshortener.cache.Cache;
 import org.service.urlshortener.cache.CacheFactory;
 import org.service.urlshortener.cache.CacheService;
 import org.service.urlshortener.error.dto.ErrorMessage;
@@ -17,9 +15,6 @@ import org.service.urlshortener.shortener.dto.response.ShortCodeResponse;
 import org.service.urlshortener.shortener.repository.OriginUrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.crypto.NullCipher;
-import java.util.concurrent.Callable;
 
 @Slf4j
 @Service
@@ -66,7 +61,6 @@ public class ShortenerService {
 
             return new ShortUrlModel(findUrl.getId(), findUrl.getOriginUrl(), findUrl.getCreatedAt());
         });
-
 
         return new OriginUrlResponse(resultUrl.getOriginalUrl());
     }
