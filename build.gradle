@@ -5,7 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-group = 'org.service'
+group = 'com'
 version = '0.0.1-SNAPSHOT'
 
 java {
