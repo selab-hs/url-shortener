@@ -1,9 +1,9 @@
 package com.urlshortener.ratelimit.service;
 
+import com.urlshortener.ratelimit.annotation.RateLimit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -12,17 +12,23 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor
 public class RateLimitService {
-    private final RedisTemplate<String, String> redisTemplate;
+    private final StringRedisTemplate redisTemplate;
 
-    public boolean tryConsume(String clientId) {
-        String key = "rate_limit:" + clientId;
-        ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        var currentCount = ops.increment(key, 1);
+    /**
+     * Client UUID 조회를 통한 요청 횟수 유효성 검사
+     *
+     * @param clientId Client UUID -> 일정 기간 내의 요청 횟수를 가져오기 위한 UUID key
+     * @return boolean -> 요청 횟수 성공 여부
+     */
+    public boolean tryConsume(String clientId, RateLimit rateLimit) {
+        var key = "rate-limit:" + clientId;
+        var currentCount = redisTemplate.opsForValue().increment(key, 1);
 
         if (currentCount == 1) {
-            redisTemplate.expire(key, Duration.ofMinutes(2));
+            var durationMinutes = rateLimit.durationMinutes();
+            redisTemplate.expire(key, Duration.ofMinutes(durationMinutes));
         }
 
-        return currentCount <= 10;
+        return currentCount <= rateLimit.value();
     }
 }
