@@ -1,4 +1,4 @@
-package com.urlshortener.shortener.comtroller.rest;
+package com.urlshortener.shortener.controller.rest;
 
 import com.urlshortener.auth.annotation.AuthMember;
 import com.urlshortener.auth.domain.MemberDetail;
