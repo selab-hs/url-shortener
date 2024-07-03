@@ -1,4 +1,4 @@
-package com.urlshortener.shortener.comtroller.rest;
+package com.urlshortener.shortener.controller.rest;
 
 import com.urlshortener.common.response.ResponseDto;
 import com.urlshortener.ratelimit.annotation.RateLimit;
