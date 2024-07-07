@@ -1,19 +1,18 @@
 package com.urlshortener.ratelimit.aspect;
 
 import com.urlshortener.error.dto.ErrorMessage;
+import com.urlshortener.error.exception.url.NotFoundClientIdHeader;
 import com.urlshortener.error.exception.url.RateLimitExceededException;
 import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.ratelimit.service.RateLimitService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 @Aspect
 @Component
@@ -21,7 +20,6 @@ import java.util.UUID;
 public class RateLimitAspect {
     private final RateLimitService rateLimitService;
     private final HttpServletRequest request;
-    private final HttpServletResponse response;
 
     /**
      * UUID 사용한 요청 횟수 제한
@@ -31,44 +29,31 @@ public class RateLimitAspect {
      */
     @Before("@annotation(rateLimit)")
     public void checkRateLimit(RateLimit rateLimit) {
-        String clientId = getClientIdFromCookie(request, response);
+        String clientId = getClientIdFromCookie(request);
 
         if (!rateLimitService.tryConsume(clientId, rateLimit)) {
             throw new RateLimitExceededException(ErrorMessage.RATE_LIMIT_EXCEEDED);
         }
     }
 
+//    web Cookie uuid (요청 제한)
+//    uuid -> User class (uuid를 컨트롤러로 보내서 유저 클래스를 생성하고 id를 Short 넣어라)
+//    User class id -> controller shortUrl -> use ()
     /**
-     * 쿠키 조회 및 쿠키가 없을 시 생성
+     * 쿠키 조회
      *
-     * @param request 쿠키 조회, response 쿠키 등록
+     * @param request 쿠키 조회
      * @return clientCookie UUID
      */
-    private String getClientIdFromCookie(HttpServletRequest request, HttpServletResponse response) {
+    private String getClientIdFromCookie(HttpServletRequest request) {
         if (request.getCookies() == null) {
-            return createClientIdFromCookie(response);
+            throw new NotFoundClientIdHeader(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER);
         }
 
         return Arrays.stream(request.getCookies())
                 .filter(cookie -> "client-id".equals(cookie.getName()))
                 .map(Cookie::getValue)
                 .findFirst()
-                .orElseGet(() -> createClientIdFromCookie(response));
-    }
-
-    /**
-     * 쿠키 생성 및 쿠키 저장
-     *
-     * @param response 쿠키 등록
-     * @return clientCookie UUID
-     */
-    private String createClientIdFromCookie(HttpServletResponse response) {
-        String clientId = UUID.randomUUID().toString();
-        Cookie cookie = new Cookie("client-id", clientId);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 183);
-        response.addCookie(cookie);
-
-        return clientId;
+                .orElseThrow(() -> new NotFoundClientIdHeader(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER));
     }
 }

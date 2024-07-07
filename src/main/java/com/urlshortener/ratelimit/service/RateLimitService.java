@@ -17,7 +17,8 @@ public class RateLimitService {
     /**
      * Client UUID 조회를 통한 요청 횟수 유효성 검사
      *
-     * @param clientId Client UUID -> 일정 기간 내의 요청 횟수를 가져오기 위한 UUID key
+     * @param clientId  -> Client UUID : 일정 기간 내의 요청 횟수를 가져오기 위한 UUID key
+     * @param rateLimit -> 요청 제한 횟수, 제한 시간 (Minutes) 설정
      * @return boolean -> 요청 횟수 성공 여부
      */
     public boolean tryConsume(String clientId, RateLimit rateLimit) {
