@@ -1,14 +1,14 @@
 package com.urlshortener.shortener.domain;
 
-import com.urlshortener.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import com.urlshortener.common.entity.BaseEntity;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Table(indexes = @Index(name = "idx_member_id", columnList = "member_id"))
 public class ShortUrl extends BaseEntity {
     @Id
@@ -26,16 +26,15 @@ public class ShortUrl extends BaseEntity {
     private String originUrl;
 
     /**
+     *
      * ShortUrl Entity 생성 method
      *
      * @param originUrl
      * @return ShortUrl
      */
-    public static ShortUrl from(String originUrl, Long memberId) {
-        ShortUrl shortUrl = new ShortUrl();
-        shortUrl.memberId = memberId;
-        shortUrl.originUrl = originUrl;
-
-        return shortUrl;
+    public static ShortUrl from(String originUrl) {
+        return ShortUrl.builder()
+                .originUrl(originUrl)
+                .build();
     }
 }
