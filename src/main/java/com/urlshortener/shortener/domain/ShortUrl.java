@@ -1,13 +1,13 @@
 package com.urlshortener.shortener.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.urlshortener.common.entity.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class ShortUrl extends BaseEntity {
     @Id
@@ -29,9 +29,8 @@ public class ShortUrl extends BaseEntity {
      * @return ShortUrl
      */
     public static ShortUrl from(String originUrl) {
-        ShortUrl shortUrl = new ShortUrl();
-        shortUrl.originUrl = originUrl;
-
-        return shortUrl;
+        return ShortUrl.builder()
+                .originUrl(originUrl)
+                .build();
     }
 }
