@@ -3,9 +3,9 @@ package com.urlshortener.error.exception.url;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.BusinessException;
 
-public class NotFoundClientIdHeader extends BusinessException {
+public class NotFoundClientIdHeaderException extends BusinessException {
 
-    public NotFoundClientIdHeader(ErrorMessage message) {
+    public NotFoundClientIdHeaderException(ErrorMessage message) {
         super(message);
     }
 }

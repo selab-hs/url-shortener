@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ShortUrlModel {
     private Long id;
+    private Long memberId;
     private String originalUrl;
     private LocalDateTime createAtl;
 
-    public static ShortUrlModel from(Long id, String originalUrl, LocalDateTime createAtl){
+    public static ShortUrlModel from(Long id, Long memberId, String originalUrl, LocalDateTime createAtl) {
         ShortUrlModel shortUrlModel = new ShortUrlModel();
+        shortUrlModel.memberId = memberId;
         shortUrlModel.id = id;
         shortUrlModel.originalUrl = originalUrl;
         shortUrlModel.createAtl = createAtl;

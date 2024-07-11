@@ -1,11 +1,10 @@
 package com.urlshortener.shortener.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import com.urlshortener.cache.CacheFactory;
 import com.urlshortener.cache.CacheService;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.url.NotFoundUrlException;
+import com.urlshortener.member.service.MemberService;
 import com.urlshortener.shortener.domain.ShortUrl;
 import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
@@ -13,6 +12,8 @@ import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.dto.response.OriginUrlResponse;
 import com.urlshortener.shortener.dto.response.ShortCodeResponse;
 import com.urlshortener.shortener.repository.ShortUrlRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class ShortenerService {
     private final ShortUrlRepository originUrlRepository;
     private final CacheService cacheService;
     private final EncryptionService encryptionService;
+    private final MemberService memberService;
 
     @Value("${server.domain}")
     private String domain;
@@ -33,14 +35,16 @@ public class ShortenerService {
      * @return originUrl -> shortUrl 로 변환 값을 'ShortUrlResponse' 로 반환합니다.
      */
     @Transactional
-    public ShortCodeResponse createShortUrl(OriginUrlRequest request) {
-        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl()));
+    public ShortCodeResponse createShortUrl(OriginUrlRequest request, String uuid) {
+        var memberId = memberService.getOrCreateMember(uuid);
+        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl(), memberId));
         cacheService
                 .asyncSet(CacheFactory
                                 .makeCachedQuiz(
                                         url.getId()),
                         ShortUrlModel.from(
                                 url.getId(),
+                                memberId,
                                 url.getOriginUrl(),
                                 url.getCreatedAt()));
         var shortCode = encryptionService.encode(url.getId());
@@ -66,6 +70,7 @@ public class ShortenerService {
 
             return ShortUrlModel.from(
                     findUrl.getId(),
+                    findUrl.getMemberId(),
                     findUrl.getOriginUrl(),
                     findUrl.getCreatedAt());
         }).getOriginalUrl();

@@ -2,6 +2,7 @@ package com.urlshortener.shortener.comtroller.rest;
 
 import com.urlshortener.common.response.ResponseDto;
 import com.urlshortener.ratelimit.annotation.RateLimit;
+import com.urlshortener.ratelimit.aspect.RateLimitAspect;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.service.ShortenerService;
@@ -18,6 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ShortenerRestController {
     private final ShortenerService shortenerService;
+    private final RateLimitAspect rateLimitAspect;
 
     /**
      * Origin Url 을 Short Url 로 변환하는 API
@@ -28,9 +30,10 @@ public class ShortenerRestController {
     @RateLimit(value = 10, durationMinutes = 2)
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
-            @RequestBody OriginUrlRequest originUrlRequest
+            @RequestBody OriginUrlRequest originUrlRequest,
+            @RequestHeader("client-id") String clientId
     ) {
-        var shortUrl = shortenerService.createShortUrl(originUrlRequest).getShortCode();
+        var shortUrl = shortenerService.createShortUrl(originUrlRequest, clientId).getShortCode();
         log.debug("short={}", shortUrl);
 
         return ResponseDto.created(shortUrl);
