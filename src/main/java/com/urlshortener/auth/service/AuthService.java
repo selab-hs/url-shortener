@@ -59,5 +59,4 @@ public class AuthService {
             throw new NotExistUserInfoException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION);
         }
     }
-
 }
