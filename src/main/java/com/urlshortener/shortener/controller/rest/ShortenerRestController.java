@@ -43,7 +43,7 @@ public class ShortenerRestController {
      * @param response
      * @throws IOException
      */
-    @GetMapping("{shortCode}")
+    @GetMapping("/{shortCode}")
     public void getOriginUrl(
             @PathVariable("shortCode") ShortCodeRequest shortCode,
             HttpServletResponse response
