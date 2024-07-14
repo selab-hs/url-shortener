@@ -31,8 +31,9 @@ public class ShortUrl extends BaseEntity {
      * @param originUrl
      * @return ShortUrl
      */
-    public static ShortUrl from(String originUrl) {
+    public static ShortUrl from(String originUrl, Long memberId) {
         return ShortUrl.builder()
+                .memberId(memberId)
                 .originUrl(originUrl)
                 .build();
     }

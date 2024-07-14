@@ -6,7 +6,6 @@ import com.urlshortener.cache.CacheService;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.url.NotFoundUrlException;
 import com.urlshortener.member.domain.vo.MemberType;
-import com.urlshortener.member.service.MemberService;
 import com.urlshortener.shortener.domain.ShortUrl;
 import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
@@ -27,7 +26,6 @@ public class ShortenerService {
     private final ShortUrlRepository originUrlRepository;
     private final CacheService cacheService;
     private final EncryptionService encryptionService;
-    private final MemberService memberService;
 
     @Value("${server.domain}")
     private String domain;
@@ -42,7 +40,7 @@ public class ShortenerService {
         if (info.getMemberType().getValue().equals(MemberType.USER.getValue())) {
             memberId = info.getId();
         }
-        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl(), memberId));
+        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl(), info.getId()));
         cacheService
                 .asyncSet(CacheFactory
                                 .makeCachedQuiz(
