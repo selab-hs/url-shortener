@@ -1,35 +1,32 @@
 package com.urlshortener.member.domain;
 
+import com.urlshortener.common.entity.BaseEntity;
+import com.urlshortener.member.domain.converter.PasswordEncodeConverter;
+import com.urlshortener.member.domain.vo.Email;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(indexes = @Index(name = "idx_uuid", columnList = "uuid"))
-public class Member {
+@Table(indexes = @Index(name = "idx_member_email", columnList = "email"))
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * 클라이언트 유저 uuid
-     */
-    @Column(nullable = false)
-    private String uuid;
+    @Column(nullable = false, unique = true)
+    @Enumerated
+    private Email email;
 
-    /**
-     * Member Entity 생성 builder
-     *
-     * @param uuid : Client UUID
-     * @return ShortUrl
-     * @prarm memberType : user MemberType
-     */
-    @Builder
-    public Member(String uuid) {
-        this.uuid = uuid;
+    @Column(nullable = false)
+    @Convert(converter = PasswordEncodeConverter.class)
+    private String password;
+
+    public Member(String email, String password) {
+        this.email = new Email(email);
+        this.password = password;
     }
 }

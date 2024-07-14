@@ -1,11 +1,13 @@
 package com.urlshortener.member.service;
 
 import com.urlshortener.member.domain.Member;
+import com.urlshortener.member.domain.dto.request.JoinMemberRequest;
+import com.urlshortener.member.domain.dto.response.MemberResponseDto;
 import com.urlshortener.member.repository.MemberRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -14,20 +16,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long getOrCreateMember(String uuid) {
-        var member = memberRepository.findByUuid(uuid)
-                .orElse(createGuestMember(uuid));
+    public MemberResponseDto createMember(JoinMemberRequest request) {
+        var member = memberRepository.save(
+                new Member(request.getEmail(),
+                        request.getPassword()));
 
-        return member.getId(); // DTO로 변경 예정
+        return MemberResponseDto.from(member.getId(), member.getEmail().getEmail());
     }
-
-    public Member createGuestMember(String uuid) {
-        var createMember = Member.builder()
-                .uuid(uuid)
-                .build();
-        memberRepository.save(createMember);
-
-        return createMember;
-    }
-
 }

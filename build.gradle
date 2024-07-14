@@ -36,6 +36,14 @@ dependencies {
 
     /** jwt */
     implementation "io.jsonwebtoken:jjwt:0.9.1"
+    // JAXB API
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+    // JAXB Runtime
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+    // Java Activation Framework
+    implementation 'javax.activation:activation:1.1.1'
 
     /** lombok */
     compileOnly 'org.projectlombok:lombok'

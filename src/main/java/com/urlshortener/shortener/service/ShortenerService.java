@@ -1,9 +1,11 @@
 package com.urlshortener.shortener.service;
 
+import com.urlshortener.auth.domain.MemberDetail;
 import com.urlshortener.cache.CacheFactory;
 import com.urlshortener.cache.CacheService;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.url.NotFoundUrlException;
+import com.urlshortener.member.domain.vo.MemberType;
 import com.urlshortener.member.service.MemberService;
 import com.urlshortener.shortener.domain.ShortUrl;
 import com.urlshortener.shortener.dto.model.ShortUrlModel;
@@ -35,8 +37,11 @@ public class ShortenerService {
      * @return originUrl -> shortUrl 로 변환 값을 'ShortUrlResponse' 로 반환합니다.
      */
     @Transactional
-    public ShortCodeResponse createShortUrl(OriginUrlRequest request, String uuid) {
-        var memberId = memberService.getOrCreateMember(uuid);
+    public ShortCodeResponse createShortUrl(MemberDetail info, OriginUrlRequest request) {
+        Long memberId = -1L;
+        if (info.getMemberType().getValue().equals(MemberType.USER.getValue())) {
+            memberId = info.getId();
+        }
         ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl(), memberId));
         cacheService
                 .asyncSet(CacheFactory
