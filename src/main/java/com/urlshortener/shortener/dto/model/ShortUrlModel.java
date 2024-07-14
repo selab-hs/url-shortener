@@ -16,7 +16,7 @@ public class ShortUrlModel {
     private String originalUrl;
     private LocalDateTime createAtl;
 
-    public static ShortUrlModel from(Long id, String originalUrl, LocalDateTime createAtl){
+    public static ShortUrlModel from(Long id, String originalUrl, LocalDateTime createAtl) {
 
         return ShortUrlModel.builder()
                 .id(id)
