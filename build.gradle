@@ -27,6 +27,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    /** 비밀번호 암호화 */
+    implementation 'org.springframework.security:spring-security-crypto'
+
+    /** jwt */
+    implementation "io.jsonwebtoken:jjwt:0.9.1"
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation 'javax.activation:activation:1.1.1'
+
     /** lombok */
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

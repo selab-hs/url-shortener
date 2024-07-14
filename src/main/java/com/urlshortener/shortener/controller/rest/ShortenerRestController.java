@@ -1,5 +1,7 @@
 package com.urlshortener.shortener.controller.rest;
 
+import com.urlshortener.auth.annotation.AuthMember;
+import com.urlshortener.auth.domain.MemberDetail;
 import com.urlshortener.common.response.ResponseDto;
 import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
@@ -28,10 +30,12 @@ public class ShortenerRestController {
     @RateLimit(value = 10, durationMinutes = 2)
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
-            @RequestBody OriginUrlRequest originUrlRequest
+            @RequestBody OriginUrlRequest originUrlRequest,
+            @AuthMember MemberDetail info
     ) {
-        var shortUrl = shortenerService.createShortUrl(originUrlRequest).getShortCode();
+        var shortUrl = shortenerService.createShortUrl(info, originUrlRequest).getShortCode();
         log.debug("short={}", shortUrl);
+        log.info("member id={}", info.getId());
 
         return ResponseDto.created(shortUrl);
     }

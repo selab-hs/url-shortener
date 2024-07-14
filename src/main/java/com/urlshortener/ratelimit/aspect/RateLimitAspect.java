@@ -1,15 +1,16 @@
 package com.urlshortener.ratelimit.aspect;
 
 import com.urlshortener.error.dto.ErrorMessage;
-import com.urlshortener.error.exception.url.NotFoundClientIdHeader;
+import com.urlshortener.error.exception.url.NotFoundClientIdHeaderException;
 import com.urlshortener.error.exception.url.RateLimitExceededException;
 import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.ratelimit.service.RateLimitService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -27,18 +28,21 @@ public class RateLimitAspect {
      * @param rateLimit -> 일정 시간 동안 (rateLimit.value()) 특정 횟수까지 요청 제한 (rateLimit.durationMinutes())
      * @throws RateLimitExceededException 일정 시간 요청 횟수 초과시 예외 발생
      */
-    @Before("@annotation(rateLimit)")
-    public void checkRateLimit(RateLimit rateLimit) {
+    @Around("@annotation(rateLimit)")
+    public Object checkRateLimit(ProceedingJoinPoint joinPoint, RateLimit rateLimit) throws Throwable {
         String clientId = getClientIdFromCookie(request);
 
         if (!rateLimitService.tryConsume(clientId, rateLimit)) {
             throw new RateLimitExceededException(ErrorMessage.RATE_LIMIT_EXCEEDED);
         }
+
+        return joinPoint.proceed();
     }
 
 //    web Cookie uuid (요청 제한)
 //    uuid -> User class (uuid를 컨트롤러로 보내서 유저 클래스를 생성하고 id를 Short 넣어라)
 //    User class id -> controller shortUrl -> use ()
+
     /**
      * 쿠키 조회
      *
@@ -47,13 +51,13 @@ public class RateLimitAspect {
      */
     private String getClientIdFromCookie(HttpServletRequest request) {
         if (request.getCookies() == null) {
-            throw new NotFoundClientIdHeader(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER);
+            throw new NotFoundClientIdHeaderException(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER);
         }
 
         return Arrays.stream(request.getCookies())
                 .filter(cookie -> "client-id".equals(cookie.getName()))
                 .map(Cookie::getValue)
                 .findFirst()
-                .orElseThrow(() -> new NotFoundClientIdHeader(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER));
+                .orElseThrow(() -> new NotFoundClientIdHeaderException(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER));
     }
 }

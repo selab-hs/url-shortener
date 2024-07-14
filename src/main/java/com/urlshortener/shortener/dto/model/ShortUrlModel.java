@@ -13,14 +13,16 @@ import java.time.LocalDateTime;
 @Builder
 public class ShortUrlModel {
     private Long id;
+    private Long memberId;
     private String originalUrl;
     private LocalDateTime createAtl;
 
-    public static ShortUrlModel from(Long id, String originalUrl, LocalDateTime createAtl){
+    public static ShortUrlModel from(Long id, Long memberId, String originalUrl, LocalDateTime createAtl) {
 
         return ShortUrlModel.builder()
                 .id(id)
                 .originalUrl(originalUrl)
+                .memberId(memberId)
                 .createAtl(createAtl)
                 .build();
     }
