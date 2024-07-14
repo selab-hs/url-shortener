@@ -1,8 +1,8 @@
 package com.urlshortener.shortener.domain;
 
+import com.urlshortener.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import com.urlshortener.common.entity.BaseEntity;
 
 @Entity
 @Getter
@@ -26,7 +26,6 @@ public class ShortUrl extends BaseEntity {
     private String originUrl;
 
     /**
-     *
      * ShortUrl Entity 생성 method
      *
      * @param originUrl
