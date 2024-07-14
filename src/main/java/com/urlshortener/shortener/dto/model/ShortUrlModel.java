@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ShortUrlModel {
     private Long id;
+    private Long memberId;
     private String originalUrl;
     private LocalDateTime createAtl;
 
