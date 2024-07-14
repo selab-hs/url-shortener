@@ -1,8 +1,8 @@
 package com.urlshortener.shortener.domain;
 
+import com.urlshortener.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import com.urlshortener.common.entity.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,6 +15,9 @@ public class ShortUrl extends BaseEntity {
     @SequenceGenerator(name = "short_url_generator", sequenceName = "id", initialValue = 20000, allocationSize = 1)
     private Long id;
 
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
+
     /**
      * 요청한 url
      */
@@ -22,7 +25,6 @@ public class ShortUrl extends BaseEntity {
     private String originUrl;
 
     /**
-     *
      * ShortUrl Entity 생성 method
      *
      * @param originUrl
