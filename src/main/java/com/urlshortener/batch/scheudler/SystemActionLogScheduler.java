@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class SystemActionLogScheduler {
     private final SystemActionLogJob systemActionLogJob;
 
+    // 5초에 한번 동작
     @Scheduled(fixedRate = 5000)
     public void run() {
         systemActionLogJob.run();

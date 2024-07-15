@@ -57,4 +57,8 @@ public class SystemActionLog extends BaseEntity implements Serializable {
         this.host = host;
         this.referer = referer;
     }
+
+    public void updateMember(Long memberId) {
+        this.memberId = memberId;
+    }
 }
