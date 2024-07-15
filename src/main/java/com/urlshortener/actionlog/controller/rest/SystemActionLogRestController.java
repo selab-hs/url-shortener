@@ -1,4 +1,4 @@
-package com.urlshortener.actionlog.controller;
+package com.urlshortener.actionlog.controller.rest;
 
 import com.urlshortener.actionlog.application.SystemActionLogService;
 import com.urlshortener.common.response.ResponseDto;

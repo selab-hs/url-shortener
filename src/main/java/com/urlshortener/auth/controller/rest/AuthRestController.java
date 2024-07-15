@@ -1,4 +1,4 @@
-package com.urlshortener.auth.controller;
+package com.urlshortener.auth.controller.rest;
 
 import com.urlshortener.auth.dto.JoinRequest;
 import com.urlshortener.auth.model.AuthUser;
