@@ -40,6 +40,8 @@ public enum ErrorMessage {
     NOT_FINISH_DELETE_SIX_MONTHS_OLD_DATA(HttpStatus.NO_CONTENT, "6개월이 지난 데이터 삭제 실패"),
 
     INVALID_JSON_DATA_ERROR(HttpStatus.BAD_REQUEST, "json data error"),
+
+    DUPLICATE_MEMBER_EXCEPTION(HttpStatus.BAD_REQUEST, "중복된 이메일 가입"),
     ;
     private final HttpStatus status;
     private final String message;
