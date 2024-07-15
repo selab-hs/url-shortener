@@ -3,6 +3,7 @@ package com.urlshortener.shortener.controller.rest;
 import com.urlshortener.auth.annotation.AuthMember;
 import com.urlshortener.auth.domain.MemberDetail;
 import com.urlshortener.common.response.ResponseDto;
+import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.service.ShortenerService;
@@ -26,7 +27,7 @@ public class ShortenerRestController {
      * @param originUrlRequest
      * @return shortUrl 를 반환합니다.
      */
-    //@RateLimit(value = 10, durationMinutes = 2)
+    @RateLimit(value = 10, durationMinutes = 2)
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
             @RequestBody OriginUrlRequest originUrlRequest,
