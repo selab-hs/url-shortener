@@ -55,7 +55,7 @@ public class ShortenerService {
         );
 
         cacheService.asyncSet(
-                CacheFactory.makeCachedQuiz(createdShortUrl.getId()),
+                CacheFactory.makeShortUrl(createdShortUrl.getId()),
                 ShortUrlModel.from(memberId, createdShortUrl)
         );
 
@@ -81,7 +81,7 @@ public class ShortenerService {
     }
 
     public ShortUrlModel getShortUrl(long originUrlId) {
-        return cacheService.get(CacheFactory.makeCachedQuiz(originUrlId), () -> {
+        return cacheService.get(CacheFactory.makeShortUrl(originUrlId), () -> {
             var shortUrl = shortUrlRepository
                     .findById(originUrlId)
                     .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
