@@ -3,13 +3,9 @@ package com.urlshortener.shortener.service;
 import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.cache.CacheFactory;
 import com.urlshortener.cache.CacheService;
-import com.urlshortener.error.dto.ErrorMessage;
-import com.urlshortener.error.exception.url.NotFoundUrlException;
 import com.urlshortener.shortener.domain.ShortUrl;
 import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
-import com.urlshortener.shortener.dto.request.ShortCodeRequest;
-import com.urlshortener.shortener.dto.response.OriginUrlResponse;
 import com.urlshortener.shortener.dto.response.ShortCodeResponse;
 import com.urlshortener.shortener.repository.ShortUrlRepository;
 import jakarta.annotation.Nullable;
@@ -20,12 +16,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ShortenerService {
+public class DevShortenerService {
     private final ShortUrlRepository shortUrlRepository;
     private final CacheService cacheService;
     private final EncryptionService encryptionService;
@@ -49,7 +45,7 @@ public class ShortenerService {
                 ShortUrl.from(
                         request.getOriginUrl(),
                         memberId,
-                        getClientIdFromCookie(httpServletRequest)
+                        UUID.randomUUID().toString()
                 )
         );
 
@@ -61,31 +57,5 @@ public class ShortenerService {
         var shortCode = encryptionService.encode(createdShortUrl.getId());
 
         return ShortCodeResponse.from(domain + shortCode);
-    }
-
-    /**
-     * shortUrl -> originUrl 변화는 서비스
-     *
-     * @param request 는 리다이렉드 할 shortUrl
-     * @return OriginUrlResp
-     * @throws NotFoundUrlException 유효하지 않은 shotUrl 이 요청 되었을 경우
-     */
-    @Transactional(readOnly = true)
-    public OriginUrlResponse getOriginUrl(ShortCodeRequest request) {
-        var originUrlId = encryptionService.decode(request.getShortCode());
-
-        var resultUrl = getShortUrl(originUrlId);
-
-        return OriginUrlResponse.from(resultUrl);
-    }
-
-    public ShortUrlModel getShortUrl(long originUrlId) {
-        return cacheService.get(CacheFactory.makeShortUrl(originUrlId), () -> {
-            var shortUrl = shortUrlRepository
-                    .findById(originUrlId)
-                    .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
-
-            return ShortUrlModel.from(shortUrl);
-        });
     }
 }

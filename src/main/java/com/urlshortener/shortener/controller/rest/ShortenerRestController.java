@@ -36,12 +36,12 @@ public class ShortenerRestController {
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
             /** 인증되지 않은 사용자도 사용 가능해야 한다. */
-            @Nullable AuthUser member,
+            @Nullable AuthUser user,
             @RequestBody OriginUrlRequest originUrlRequest,
             HttpServletRequest request
     ) {
         var shortUrl = shortenerService.createShortUrl(
-                member,
+                user,
                 originUrlRequest,
                 request
         ).getShortCode();
