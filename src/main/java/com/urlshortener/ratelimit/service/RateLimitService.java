@@ -1,5 +1,7 @@
 package com.urlshortener.ratelimit.service;
 
+import com.urlshortener.error.dto.ErrorMessage;
+import com.urlshortener.error.exception.BusinessException;
 import com.urlshortener.ratelimit.annotation.RateLimit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,10 @@ public class RateLimitService {
     public boolean tryConsume(String clientId, RateLimit rateLimit) {
         var key = "rate-limit:" + clientId;
         var currentCount = redisTemplate.opsForValue().increment(key, 1);
+
+        if (currentCount == null) {
+            throw new BusinessException(ErrorMessage.INTERNAL_SERVER_ERROR);
+        }
 
         if (currentCount == 1) {
             var durationMills = rateLimit.durationMills();
