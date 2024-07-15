@@ -8,6 +8,7 @@ import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.service.ShortenerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +37,14 @@ public class ShortenerRestController {
     public ResponseEntity<?> createShortUrl(
             /** 인증되지 않은 사용자도 사용 가능해야 한다. */
             @Nullable AuthUser member,
-            @RequestBody OriginUrlRequest originUrlRequest
+            @RequestBody OriginUrlRequest originUrlRequest,
+            HttpServletRequest request
     ) {
-        var shortUrl = shortenerService.createShortUrl(member, originUrlRequest).getShortCode();
+        var shortUrl = shortenerService.createShortUrl(
+                member,
+                originUrlRequest,
+                request
+        ).getShortCode();
 
         return ResponseDto.created(shortUrl);
     }

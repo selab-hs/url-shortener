@@ -18,6 +18,9 @@ public class ShortUrl extends BaseEntity {
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 
+    @Column(name = "uuid", nullable = false)
+    private String uuid;
+
     /**
      * 요청한 url
      */
@@ -30,10 +33,11 @@ public class ShortUrl extends BaseEntity {
      * @param originUrl
      * @return ShortUrl
      */
-    public static ShortUrl from(String originUrl, Long memberId) {
+    public static ShortUrl from(String originUrl, Long memberId, String uuid) {
         return ShortUrl.builder()
                 .memberId(memberId)
                 .originUrl(originUrl)
+                .uuid(uuid)
                 .build();
     }
 }

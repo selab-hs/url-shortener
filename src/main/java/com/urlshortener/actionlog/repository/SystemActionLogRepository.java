@@ -2,6 +2,7 @@ package com.urlshortener.actionlog.repository;
 
 import com.urlshortener.actionlog.domain.SystemActionLog;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,4 +17,7 @@ public interface SystemActionLogRepository extends JpaRepository<SystemActionLog
     List<SystemActionLog> findByUrlId(Long urlId);
 
     Long countByUrlId(Long urlId);
+
+    @Query("SELECT sal FROM SystemActionLog sal WHERE sal.memberId IS NULL")
+    List<SystemActionLog> findNullMemberIdLogsLimitedTo1000();
 }

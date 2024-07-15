@@ -42,7 +42,6 @@ public class SystemActionLog extends BaseEntity implements Serializable {
 
     public SystemActionLog(
             String ipAddress,
-            Long memberId,
             String path,
             Long urlId,
             String httpMethod,
@@ -51,7 +50,6 @@ public class SystemActionLog extends BaseEntity implements Serializable {
             String referer
     ) {
         this.ipAddress = ipAddress;
-        this.memberId = memberId;
         this.path = path;
         this.urlId = urlId;
         this.httpMethod = httpMethod;

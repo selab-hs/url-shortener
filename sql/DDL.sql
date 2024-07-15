@@ -12,6 +12,7 @@ CREATE TABLE `short_url`
 (
     `id`         bigint        NOT NULL AUTO_INCREMENT,
     `member_id`  bigint        NOT NULL,
+    `uuid`       varchar(512)  NOT NULL,
     `origin_url` varchar(2048) NOT NULL,
     `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '생성일',
     PRIMARY KEY (`id`)

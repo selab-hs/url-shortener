@@ -13,11 +13,14 @@ import com.urlshortener.shortener.dto.response.OriginUrlResponse;
 import com.urlshortener.shortener.dto.response.ShortCodeResponse;
 import com.urlshortener.shortener.repository.ShortUrlRepository;
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
 
 @Slf4j
 @Service
@@ -35,10 +38,21 @@ public class ShortenerService {
      * @return originUrl -> shortUrl 로 변환 값을 'ShortUrlResponse' 로 반환합니다.
      */
     @Transactional
-    public ShortCodeResponse createShortUrl(@Nullable AuthUser user, OriginUrlRequest request) {
+    public ShortCodeResponse createShortUrl(
+            @Nullable AuthUser user,
+            OriginUrlRequest request,
+            HttpServletRequest httpServletRequest
+    ) {
         Long memberId = AuthUser.resolveMemberId(user);
 
-        ShortUrl createdShortUrl = shortUrlRepository.save(ShortUrl.from(request.getOriginUrl(), memberId));
+
+        ShortUrl createdShortUrl = shortUrlRepository.save(
+                ShortUrl.from(
+                        request.getOriginUrl(),
+                        memberId,
+                        getClientIdFromCookie(httpServletRequest)
+                )
+        );
 
         cacheService.asyncSet(
                 CacheFactory.makeCachedQuiz(createdShortUrl.getId()),
