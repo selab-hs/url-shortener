@@ -6,28 +6,40 @@ import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/action_logs")
+@RequestMapping("/api/v1/actionlogs")
 @RequiredArgsConstructor
 public class SystemActionLogController {
 
     private final SystemActionLogService systemActionLogService;
 
-    @GetMapping
-    public ResponseEntity<?> getShortUrl(@RequestBody ShortCodeRequest request) {
-        var logs = systemActionLogService.getAllShortcodeViews(request);
+    /**
+     * 해당 shortCode 의 접근 정보를 전체 조회하는 API
+     *
+     * @param shortCode
+     * @return List
+     */
+    @GetMapping("/{shortCode}")
+    public ResponseEntity<?> getShortUrl(@PathVariable("shortCode") ShortCodeRequest shortCode) {
+        var shortcodeLogs = systemActionLogService.getAllShortcodeViews(shortCode);
 
-        return ResponseDto.ok(logs);
+        return ResponseDto.ok(shortcodeLogs);
     }
 
-    @GetMapping("/views")
-    public ResponseEntity<?> getShortUrlViewCount(@RequestBody ShortCodeRequest request) {
-        var logs = systemActionLogService.getShortcodeViewCount(request);
+    /**
+     * 해당 shortCode 의 조회수를 조회 하는 API
+     *
+     * @param shortCode
+     * @return
+     */
+    @GetMapping("/{shortCode}/views")
+    public ResponseEntity<?> getShortUrlViewCount(@PathVariable("shortCode") ShortCodeRequest shortCode) {
+        var shortcodeViewCount = systemActionLogService.getShortcodeViewCount(shortCode);
 
-        return ResponseDto.ok(logs);
+        return ResponseDto.ok(shortcodeViewCount);
     }
 }

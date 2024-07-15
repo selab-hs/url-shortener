@@ -19,8 +19,8 @@ public class SystemActionLog extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "ip_address")
-//    private String ipAddress;
+    @Column(name = "ip_address")
+    private String ipAddress;
 
     @Column(name = "shorturl_idx")
     private Long urlId;
@@ -37,8 +37,16 @@ public class SystemActionLog extends BaseEntity implements Serializable {
 
     private String referer;
 
-    public SystemActionLog(String path, Long urlId, String httpMethod, String userAgent, String host, String referer) {
-        //this.ipAddress = ipAddress;
+    public SystemActionLog(
+            String ipAddress,
+            String path,
+            Long urlId,
+            String httpMethod,
+            String userAgent,
+            String host,
+            String referer
+    ) {
+        this.ipAddress = ipAddress;
         this.path = path;
         this.urlId = urlId;
         this.httpMethod = httpMethod;

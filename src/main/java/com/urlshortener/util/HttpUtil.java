@@ -1,14 +1,24 @@
 package com.urlshortener.util;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 
-/**
- * todo : 사용자 ID,UUID 호출하는 로직 추가 예정
- */
 public class HttpUtil {
+    @Value("${security.separator}")
+    public static String TOKEN_CODE;
+
     public static String getClientIpAddress(HttpServletRequest request) {
+        if (request.getHeader("X-READYS-AUTH-TOKEN") == null) {
+
+            return noneMember(request);
+        }
+
+        return TOKEN_CODE + (request.getHeader("X-READYS-AUTH-TOKEN"));
+    }
+
+    private static String noneMember(HttpServletRequest request) {
         var headers = new String[]{
                 "X-Forwarded-For",
                 "Proxy-Client-IP",
@@ -23,9 +33,5 @@ public class HttpUtil {
                 .findFirst()
                 .orElse(request.getRemoteAddr());
     }
-
-//    public static String getToksUserKeyUUID(HttpServletRequest request) {
-//        return request.getHeader(Constants.USER_UUID);
-//    }
 }
 

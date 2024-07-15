@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface SystemActionLogRepository extends JpaRepository<SystemActionLog, Long> {
-
     Long countByCreatedAtBetween(LocalDateTime startAt, LocalDateTime endAt);
 
     List<SystemActionLog> findByUrlId(Long urlId);
