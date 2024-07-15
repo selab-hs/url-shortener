@@ -1,6 +1,7 @@
 package com.urlshortener.member.service;
 
 import com.urlshortener.error.dto.ErrorMessage;
+import com.urlshortener.error.exception.member.AlreadyExistMemberEmailException;
 import com.urlshortener.error.exception.member.DuplicateMemberException;
 import com.urlshortener.member.domain.Member;
 import com.urlshortener.member.domain.dto.request.JoinMemberRequest;
@@ -34,5 +35,13 @@ public class MemberService {
                         request.getPassword()));
 
         return MemberResponseDto.from(member.getId(), member.getEmail().getEmail());
+    }
+
+    @Transactional(readOnly = true)
+    public void duplicateValidationMemberEmail(String email) {
+        memberRepository.findByEmail(new Email(email))
+                .ifPresent(member -> {
+                    throw new AlreadyExistMemberEmailException(ErrorMessage.ALREADY_EXIST_MEMBER_EMAIL_EXCEPTION);
+                });
     }
 }

@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>로그인</title>
+    <title>URL SHORTENER LOGIN</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/member/login.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/font.css" type="text/css"/>
+    <script src="/js/member/login.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div class="login-form">
-    <form>
-        <input type="text" name="email" class="text-field" placeholder="아이디">
-        <input type="password" name="password" class="text-field" placeholder="비밀번호">
-        <input type="submit" value="로그인" class="submit-btn">
-    </form>
+<div class='login_container'>
+    <div class='login_box'>
+        <div class='login_text_id'>
+            ID
+        </div>
+        <div class='login_input_id'>
+            <input id="login_id" type='text' placeholder='ID' name='userId' required/>
+        </div>
 
-    <div class="links">
-        <a href="#">비밀번호를 잊어버리셨나요?</a>
+        <div class='login_text_pwd'>
+            PassWord
+        </div>
+        <div class='login_input_pwd'>
+            <input id="login_password" type='password' placeholder='Pwd' name='userPwd' required/>
+        </div>
+
+        <div class='login_button_box'>
+            <input type="submit" value="Login" onclick="login_submit()"/>
+        </div>
+    </div>
+
+    <div class='login_bottom_link'>
+        <a href="http://localhost:8080/sign-up">Join?</a>
+        <a>Forgot Id/Pwd?</a>
     </div>
 </div>
 </body>
