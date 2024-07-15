@@ -6,6 +6,7 @@ import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.service.ShortenerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Tag(name = "url 단축기")
 @Slf4j
 @RestController
 @RequiredArgsConstructor

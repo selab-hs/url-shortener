@@ -1,12 +1,14 @@
 package com.urlshortener.auth.controller.rest;
 
 import com.urlshortener.auth.model.AuthUser;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "인증인가 개발 및 테스트용")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth/dev")
