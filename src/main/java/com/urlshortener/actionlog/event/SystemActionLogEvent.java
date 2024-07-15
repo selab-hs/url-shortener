@@ -1,4 +1,4 @@
-package com.urlshortener.actionlog.even;
+package com.urlshortener.actionlog.event;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
