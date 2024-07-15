@@ -39,15 +39,7 @@ public class SystemActionLogService {
     public List<SystemActionLogResponse> getAllShortcodeViews(ShortCodeRequest request) {
         var logs = systemActionLogRepository.findByUrlId(encryptionService.decode(request.getShortCode()));
         return logs.stream()
-                .map(
-                        (log) -> SystemActionLogResponse.from(
-                                log.getIpAddress(),
-                                log.getHttpMethod(),
-                                log.getPath(),
-                                log.getUserAgent(),
-                                log.getHost(),
-                                log.getReferer()
-                        ))
+                .map(SystemActionLogResponse::from)
                 .collect(Collectors.toList());
     }
 
@@ -58,10 +50,10 @@ public class SystemActionLogService {
      * @return Long
      */
     public ShortcodeViewCountResponse getShortcodeViewCount(ShortCodeRequest request) {
+        var decodedShortCode = encryptionService.decode(request.getShortCode());
 
-        return ShortcodeViewCountResponse.from(
-                systemActionLogRepository.countByUrlId(
-                        encryptionService.decode(
-                                request.getShortCode())));
+        var count = systemActionLogRepository.countByUrlId(decodedShortCode);
+
+        return ShortcodeViewCountResponse.from(count);
     }
 }

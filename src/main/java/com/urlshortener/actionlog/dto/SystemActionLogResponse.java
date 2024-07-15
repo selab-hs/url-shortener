@@ -1,5 +1,6 @@
 package com.urlshortener.actionlog.dto;
 
+import com.urlshortener.actionlog.domain.SystemActionLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,23 +17,15 @@ public class SystemActionLogResponse {
     private String userAgent;
     private String host;
     private String referer;
-
-    public static SystemActionLogResponse from(
-            String ipAddress,
-            String method,
-            String path,
-            String userAgent,
-            String host,
-            String referer
-    ) {
-
+    
+    public static SystemActionLogResponse from(SystemActionLog log) {
         return SystemActionLogResponse.builder()
-                .ipAddress(ipAddress)
-                .method(method)
-                .path(path)
-                .userAgent(userAgent)
-                .host(host)
-                .referer(referer)
+                .ipAddress(log.getIpAddress())
+                .method(log.getHttpMethod())
+                .path(log.getPath())
+                .userAgent(log.getUserAgent())
+                .host(log.getHost())
+                .referer(log.getReferer())
                 .build();
     }
 }

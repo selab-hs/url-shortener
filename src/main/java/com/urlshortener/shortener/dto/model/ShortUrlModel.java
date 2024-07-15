@@ -1,5 +1,6 @@
 package com.urlshortener.shortener.dto.model;
 
+import com.urlshortener.shortener.domain.ShortUrl;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,13 +18,21 @@ public class ShortUrlModel {
     private String originalUrl;
     private LocalDateTime createAtl;
 
-    public static ShortUrlModel from(Long id, Long memberId, String originalUrl, LocalDateTime createAtl) {
-
+    public static ShortUrlModel from(Long memberId, ShortUrl shortUrl) {
         return ShortUrlModel.builder()
-                .id(id)
-                .originalUrl(originalUrl)
+                .id(shortUrl.getId())
+                .originalUrl(shortUrl.getOriginUrl())
                 .memberId(memberId)
-                .createAtl(createAtl)
+                .createAtl(shortUrl.getCreatedAt())
+                .build();
+    }
+
+    public static ShortUrlModel from(ShortUrl shortUrl) {
+        return ShortUrlModel.builder()
+                .id(shortUrl.getId())
+                .originalUrl(shortUrl.getOriginUrl())
+                .memberId(shortUrl.getMemberId())
+                .createAtl(shortUrl.getCreatedAt())
                 .build();
     }
 }

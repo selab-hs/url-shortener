@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ShortenerService {
-    private final ShortUrlRepository originUrlRepository;
+    private final ShortUrlRepository shortUrlRepository;
     private final CacheService cacheService;
     private final EncryptionService encryptionService;
 
@@ -40,16 +40,12 @@ public class ShortenerService {
         if (info.getMemberType().getValue().equals(MemberType.USER.getValue())) {
             memberId = info.getId();
         }
-        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl(), info.getId()));
-        cacheService
-                .asyncSet(CacheFactory
-                                .makeCachedQuiz(
-                                        url.getId()),
-                        ShortUrlModel.from(
-                                url.getId(),
-                                memberId,
-                                url.getOriginUrl(),
-                                url.getCreatedAt()));
+        ShortUrl url = shortUrlRepository.save(ShortUrl.from(request.getOriginUrl(), info.getId()));
+
+        cacheService.asyncSet(
+                CacheFactory.makeCachedQuiz(url.getId()),
+                ShortUrlModel.from(memberId, url)
+        );
         var shortCode = encryptionService.encode(url.getId());
 
         return ShortCodeResponse.from(domain + shortCode);
@@ -67,15 +63,11 @@ public class ShortenerService {
         var originUrlId = encryptionService.decode(request.getShortCode());
         var cache = CacheFactory.makeCachedQuiz(originUrlId);
         var resultUrl = cacheService.get(cache, () -> {
-            var findUrl = originUrlRepository
+            var shortUrl = shortUrlRepository
                     .findById(originUrlId)
                     .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
-            return ShortUrlModel.from(
-                    findUrl.getId(),
-                    findUrl.getMemberId(),
-                    findUrl.getOriginUrl(),
-                    findUrl.getCreatedAt());
+            return ShortUrlModel.from(shortUrl);
         }).getOriginalUrl();
 
         return OriginUrlResponse.from(resultUrl);
