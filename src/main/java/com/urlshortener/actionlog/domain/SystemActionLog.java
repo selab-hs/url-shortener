@@ -12,33 +12,37 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "system_action_log", indexes = {
-        @Index(name = "idx_url_id", columnList = "shorturl_idx")
+        @Index(name = "idx__member_id__short_url_id", columnList = "member_id, short_url_id")
 })
 public class SystemActionLog extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ip_address")
-    private String ipAddress;
+    @Column(name = "member_id")
+    private Long memberId;
 
-    @Column(name = "shorturl_idx")
+    @Column(name = "short_url_id")
     private Long urlId;
 
-    private String path;
+    private String host;
 
     @Column(name = "http_method")
     private String httpMethod;
 
-    @Column(name = "user_agent")
-    private String userAgent;
+    @Column(name = "ip_address")
+    private String ipAddress;
 
-    private String host;
+    private String path;
 
     private String referer;
 
+    @Column(name = "user_agent")
+    private String userAgent;
+
     public SystemActionLog(
             String ipAddress,
+            Long memberId,
             String path,
             Long urlId,
             String httpMethod,
@@ -47,6 +51,7 @@ public class SystemActionLog extends BaseEntity implements Serializable {
             String referer
     ) {
         this.ipAddress = ipAddress;
+        this.memberId = memberId;
         this.path = path;
         this.urlId = urlId;
         this.httpMethod = httpMethod;

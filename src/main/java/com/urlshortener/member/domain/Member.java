@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(indexes = @Index(name = "idx_member_email", columnList = "email"))
+@Table(name = "member", indexes = @Index(name = "uidx__email", columnList = "email"))
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

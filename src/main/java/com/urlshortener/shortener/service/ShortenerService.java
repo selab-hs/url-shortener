@@ -61,14 +61,18 @@ public class ShortenerService {
     public OriginUrlResponse getOriginUrl(ShortCodeRequest request) {
         var originUrlId = encryptionService.decode(request.getShortCode());
 
-        var resultUrl = cacheService.get(CacheFactory.makeCachedQuiz(originUrlId), () -> {
+        var resultUrl = getShortUrl(originUrlId);
+
+        return OriginUrlResponse.from(resultUrl);
+    }
+
+    public ShortUrlModel getShortUrl(long originUrlId) {
+        return cacheService.get(CacheFactory.makeCachedQuiz(originUrlId), () -> {
             var shortUrl = shortUrlRepository
                     .findById(originUrlId)
                     .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
             return ShortUrlModel.from(shortUrl);
-        }).getOriginalUrl();
-
-        return OriginUrlResponse.from(resultUrl);
+        });
     }
 }

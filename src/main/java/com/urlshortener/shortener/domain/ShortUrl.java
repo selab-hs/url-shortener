@@ -9,11 +9,10 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(indexes = @Index(name = "idx_member_id", columnList = "member_id"))
+@Table(name = "short_url", indexes = @Index(name = "idx__member_id", columnList = "member_id"))
 public class ShortUrl extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "short_url_generator")
-    @SequenceGenerator(name = "short_url_generator", sequenceName = "id", initialValue = 20000, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "member_id", nullable = false)

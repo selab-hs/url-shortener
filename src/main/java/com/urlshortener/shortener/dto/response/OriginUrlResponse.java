@@ -1,5 +1,6 @@
 package com.urlshortener.shortener.dto.response;
 
+import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import lombok.Getter;
 public class OriginUrlResponse {
     private String originUrl;
 
-    public static OriginUrlResponse from(String originUrl){
-        return new OriginUrlResponse(originUrl);
+    public static OriginUrlResponse from(ShortUrlModel shortUrl) {
+        return new OriginUrlResponse(shortUrl.getOriginalUrl());
     }
 }
