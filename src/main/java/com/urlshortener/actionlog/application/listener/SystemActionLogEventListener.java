@@ -23,7 +23,7 @@ public class SystemActionLogEventListener {
     @EventListener(SystemActionLogEvent.class)
     public void subscribe(SystemActionLogEvent event) {
         var systemActionLog = new SystemActionLog(
-                convertTokenOrIpAddress(event.getIpAddress()),
+                event.getIpAddress(),
                 event.getPath(),
                 encryptionService.decode(event.getPath().replace("/", "")),
                 event.getMethod(),

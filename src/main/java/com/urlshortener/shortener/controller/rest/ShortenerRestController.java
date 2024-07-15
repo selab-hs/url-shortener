@@ -7,6 +7,7 @@ import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.service.ShortenerService;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,10 @@ public class ShortenerRestController {
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
             @RequestBody OriginUrlRequest originUrlRequest,
-            @AuthMember MemberDetail info
+            @Nullable @AuthMember MemberDetail member
     ) {
-        var shortUrl = shortenerService.createShortUrl(info, originUrlRequest).getShortCode();
+        var shortUrl = shortenerService.createShortUrl(member, originUrlRequest).getShortCode();
         log.debug("short={}", shortUrl);
-        log.info("member id={}", info.getId());
 
         return ResponseDto.created(shortUrl);
     }
