@@ -1,12 +1,11 @@
 package com.urlshortener.auth.service;
 
-import com.urlshortener.auth.domain.MemberDetail;
 import com.urlshortener.auth.dto.JoinRequest;
+import com.urlshortener.auth.dto.UserInfoResponse;
 import com.urlshortener.auth.token.TokenProvider;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.member.InvalidPasswordMatchException;
 import com.urlshortener.error.exception.member.NotExistMemberException;
-import com.urlshortener.error.exception.member.NotExistUserInfoException;
 import com.urlshortener.member.domain.vo.Email;
 import com.urlshortener.member.domain.vo.MemberType;
 import com.urlshortener.member.repository.MemberRepository;
@@ -28,11 +27,11 @@ public class AuthService {
      * @brief * 유저 조회
      */
     @Transactional(readOnly = true)
-    public MemberDetail loadUserById(Long id) {
+    public UserInfoResponse loadUserById(Long id) {
         var member = memberRepository.findById(id)
                 .orElseThrow(() -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION));
 
-        return new MemberDetail(member);
+        return new UserInfoResponse(member.getId(), member.getEmail().getEmail());
     }
 
     /**
@@ -52,11 +51,5 @@ public class AuthService {
         }
 
         return tokenProvider.generateJwtToken(member.getId(), MemberType.USER.getValue());
-    }
-
-    public void parsingObjectNullCheck(MemberDetail detail) {
-        if (detail == null) {
-            throw new NotExistUserInfoException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION);
-        }
     }
 }

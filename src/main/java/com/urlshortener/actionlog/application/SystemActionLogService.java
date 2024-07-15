@@ -38,6 +38,7 @@ public class SystemActionLogService {
      */
     public List<SystemActionLogResponse> getAllShortcodeViews(ShortCodeRequest request) {
         var logs = systemActionLogRepository.findByUrlId(encryptionService.decode(request.getShortCode()));
+
         return logs.stream()
                 .map(SystemActionLogResponse::from)
                 .collect(Collectors.toList());

@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/actionlogs")
+@RequestMapping("/api/v1/system-action-logs")
 @RequiredArgsConstructor
-public class SystemActionLogController {
-
+public class SystemActionLogRestController {
     private final SystemActionLogService systemActionLogService;
 
     /**

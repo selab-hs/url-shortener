@@ -1,8 +1,7 @@
 package com.urlshortener.auth.controller;
 
-import com.urlshortener.auth.annotation.AuthMember;
-import com.urlshortener.auth.domain.MemberDetail;
 import com.urlshortener.auth.dto.JoinRequest;
+import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.auth.service.AuthService;
 import com.urlshortener.common.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,9 @@ public class AuthRestController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> getInformation(@AuthMember MemberDetail detail) {
-        authService.parsingObjectNullCheck(detail);
+    public ResponseEntity<?> getInformation(AuthUser user) {
+        var response = authService.loadUserById(user.getId());
 
-        return ResponseDto.ok(detail);
+        return ResponseDto.ok(response);
     }
 }

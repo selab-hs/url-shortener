@@ -1,7 +1,8 @@
 package com.urlshortener.auth.token;
 
-import com.urlshortener.auth.domain.Authentication;
-import com.urlshortener.auth.domain.MemberDetail;
+import com.urlshortener.auth.model.AuthUser;
+import com.urlshortener.auth.model.AuthUserImpl;
+import com.urlshortener.auth.model.AuthToken;
 import com.urlshortener.auth.service.AuthService;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.auth.ReadysExpiredJwtException;
@@ -69,9 +70,12 @@ public class TokenProvider {
      * @return * Authentication : 유저 정보와 유저 역할
      * @brief * 토큰 인증 정보 조회
      */
-    public Authentication getAuthentication(String token) {
-        MemberDetail memberDetail = authService.loadUserById(this.getUserToken(token));
-        return new Authentication(memberDetail, memberDetail.getMemberType());
+    public AuthUser getAuthMember(AuthToken token) {
+        var id = getUserToken(token.getToken());
+
+        var member = authService.loadUserById(id);
+
+        return new AuthUserImpl(member.getId());
     }
 
     /**

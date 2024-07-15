@@ -1,4 +1,4 @@
-package com.urlshortener.health.controller;
+package com.urlshortener.health.controller.rest;
 
 import com.urlshortener.common.response.ResponseDto;
 import org.springframework.http.ResponseEntity;

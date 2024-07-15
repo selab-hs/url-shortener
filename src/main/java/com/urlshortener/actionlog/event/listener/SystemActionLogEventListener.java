@@ -1,7 +1,7 @@
-package com.urlshortener.actionlog.application.listener;
+package com.urlshortener.actionlog.event.listener;
 
 import com.urlshortener.actionlog.domain.SystemActionLog;
-import com.urlshortener.actionlog.event.SystemActionLogEvent;
+import com.urlshortener.actionlog.event.model.SystemActionLogEvent;
 import com.urlshortener.actionlog.repository.SystemActionLogRepository;
 import com.urlshortener.auth.token.TokenProvider;
 import com.urlshortener.shortener.service.EncryptionService;

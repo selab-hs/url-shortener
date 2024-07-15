@@ -2,12 +2,12 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.readys'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -52,6 +52,7 @@ dependencies {
 
     /** thymeleaf */
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.named('test') {
@@ -64,4 +65,7 @@ sourceSets {
             srcDirs = ['src/main/resources', 'src/main/resources/url-shortener-security']
         }
     }
+}
+kotlin {
+    jvmToolchain(17)
 }

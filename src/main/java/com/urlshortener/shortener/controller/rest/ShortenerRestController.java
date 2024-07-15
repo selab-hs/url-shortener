@@ -1,7 +1,6 @@
 package com.urlshortener.shortener.controller.rest;
 
-import com.urlshortener.auth.annotation.AuthMember;
-import com.urlshortener.auth.domain.MemberDetail;
+import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.common.response.ResponseDto;
 import com.urlshortener.ratelimit.annotation.RateLimit;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
@@ -31,11 +30,11 @@ public class ShortenerRestController {
     @RateLimit(value = 10, durationMinutes = 2)
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
-            @RequestBody OriginUrlRequest originUrlRequest,
-            @Nullable @AuthMember MemberDetail member
+            /** 인증되지 않은 사용자도 사용 가능해야 한다. */
+            @Nullable AuthUser member,
+            @RequestBody OriginUrlRequest originUrlRequest
     ) {
         var shortUrl = shortenerService.createShortUrl(member, originUrlRequest).getShortCode();
-        log.debug("short={}", shortUrl);
 
         return ResponseDto.created(shortUrl);
     }

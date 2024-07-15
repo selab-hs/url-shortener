@@ -1,6 +1,6 @@
 package com.urlshortener.filter;
 
-import com.urlshortener.actionlog.event.SystemActionLogEvent;
+import com.urlshortener.actionlog.event.model.SystemActionLogEvent;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

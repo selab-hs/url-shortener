@@ -1,10 +1,8 @@
 package com.urlshortener.auth.resolver;
 
-import com.urlshortener.auth.annotation.AuthMember;
-import com.urlshortener.auth.domain.Authentication;
-import com.urlshortener.auth.domain.MemberDetail;
+import com.urlshortener.auth.model.AuthUser;
+import com.urlshortener.auth.model.AuthToken;
 import com.urlshortener.auth.token.TokenProvider;
-import com.urlshortener.member.domain.vo.MemberType;
 import com.urlshortener.util.HeaderUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +13,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import java.util.Objects;
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
@@ -25,24 +20,29 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return Objects.nonNull(parameter.getParameterAnnotation(AuthMember.class));
+        return parameter.getParameterType().equals(AuthUser.class);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer
-            , NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        var httpServletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
-        var token = HeaderUtil.getAccessToken(httpServletRequest);
-        MemberDetail memberData = null;
+    public Object resolveArgument(
+            MethodParameter parameter,
+            ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest,
+            WebDataBinderFactory binderFactory) {
+        var httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
 
-        if (token != null && tokenProvider.validateDateToken(token)) {
-            memberData = tokenProvider.getAuthentication(token).getUserDetail();
-        }
+        var token = HeaderUtil.getAccessToken(httpServletRequest);
 
         if (token == null) {
-            memberData = new Authentication(new MemberDetail(), MemberType.GUEST).getUserDetail();
+            if (parameter.isOptional()) {
+                return null;
+            }
+
+            token = "";
         }
 
-        return Optional.of(memberData).orElseThrow(NullPointerException::new);
+        var authtoken = new AuthToken(token);
+
+        return tokenProvider.getAuthMember(authtoken);
     }
 }
