@@ -33,7 +33,10 @@ public class RateLimitAspect {
         String clientId = getClientIdFromCookie(request);
 
         if (!rateLimitService.tryConsume(clientId, rateLimit)) {
-            throw new RateLimitExceededException(ErrorMessage.RATE_LIMIT_EXCEEDED);
+            throw new RateLimitExceededException(
+                    ErrorMessage.RATE_LIMIT_EXCEEDED,
+                    rateLimit.type().getMessage()
+            );
         }
 
         return joinPoint.proceed();

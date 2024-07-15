@@ -4,8 +4,7 @@ import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.BusinessException;
 
 public class RateLimitExceededException extends BusinessException {
-
-    public RateLimitExceededException(ErrorMessage message) {
-        super(message);
+    public RateLimitExceededException(ErrorMessage message, String reason) {
+        super(message, reason);
     }
 }

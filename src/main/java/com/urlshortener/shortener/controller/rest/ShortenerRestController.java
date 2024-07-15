@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+import static com.urlshortener.ratelimit.annotation.RateLimitType.CREATE_SHORT_URL;
+
 @Tag(name = "url 단축기")
 @Slf4j
 @RestController
@@ -29,7 +31,7 @@ public class ShortenerRestController {
      * @param originUrlRequest
      * @return shortUrl 를 반환합니다.
      */
-    @RateLimit(value = 10, durationMinutes = 2)
+    @RateLimit(type = CREATE_SHORT_URL, value = 10, durationMills = 60000)
     @PostMapping("/api/v1/short")
     public ResponseEntity<?> createShortUrl(
             /** 인증되지 않은 사용자도 사용 가능해야 한다. */

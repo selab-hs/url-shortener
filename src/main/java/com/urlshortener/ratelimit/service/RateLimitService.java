@@ -26,8 +26,8 @@ public class RateLimitService {
         var currentCount = redisTemplate.opsForValue().increment(key, 1);
 
         if (currentCount == 1) {
-            var durationMinutes = rateLimit.durationMinutes();
-            redisTemplate.expire(key, Duration.ofMinutes(durationMinutes));
+            var durationMills = rateLimit.durationMills();
+            redisTemplate.expire(key, Duration.ofMillis(durationMills));
         }
 
         return currentCount <= rateLimit.value();

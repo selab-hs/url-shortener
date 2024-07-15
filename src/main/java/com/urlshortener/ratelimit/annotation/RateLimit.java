@@ -8,6 +8,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RateLimit {
+    RateLimitType type();
+
     int value();
-    int durationMinutes();
+
+    int durationMills();
 }

@@ -12,30 +12,34 @@
             justify-content: center; /* 수평 중심 정렬 */
             background-color: #f8f9fa; /* 스크린샷의 배경색에 맞춤 */
         }
+
         .container {
             width: 100%; /* 폭을 전체 창 크기에 맞춤 */
             max-width: 1000px; /* 최대 너비 설정 */
             padding: 40px; /* 내부 패딩 추가 */
             background-color: white; /* 배경색 */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 그림자 효과 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
             border-radius: 8px; /* 모서리 둥글게 */
         }
+
         .form-signin-heading {
             margin-bottom: 30px;
             font-size: 24px; /* 폰트 크기 조정 */
         }
+
         .btn, input[type="text"] {
             height: 50px; /* 버튼 및 입력 필드 높이 */
             font-size: 16px; /* 폰트 크기 */
         }
+
         input[type="text"] {
             width: 100%; /* 입력 필드 폭을 컨테이너에 맞춤 */
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script th:inline="javascript">
-        $(document).ready(function() {
-            $('.form-signin').submit(function(event) {
+        $(document).ready(function () {
+            $('.form-signin').submit(function (event) {
                 event.preventDefault();
                 const originUrl = $('input[name="originUrl"]').val();
                 const clientId = getClientIdFromCookie();
@@ -45,19 +49,19 @@
                     type: 'POST',
                     contentType: 'application/json',
                     headers: {
-                      'client-id': clientId
+                        'client-id': clientId
                     },
-                    data: JSON.stringify({ "originUrl": originUrl }),
-                    success: function(response) {
+                    data: JSON.stringify({"originUrl": originUrl}),
+                    success: function (response) {
                         $('.alert').remove();
                         const alertSuccess = '<div class="alert alert-success mt-4">' +
                             '<a class="form-control" href="/' + response.data.replace("https://readys.link/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
                             '</div>';
                         $('.form-group').after(alertSuccess);
                     },
-                    error: function(response) {
+                    error: function (response) {
                         $('.alert').remove();
-                        const alertError = '<div class="alert alert-danger mt-4">' + JSON.parse(response.responseText).message + '</div>';
+                        const alertError = '<div class="alert alert-danger mt-4">' + JSON.parse(response.responseText).reason + '</div>';
                         $('.form-group').after(alertError);
                     }
                 });
@@ -66,7 +70,7 @@
 
         // UUID 생성 함수
         function generateUUID() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 
                 return v.toString(16);
@@ -119,7 +123,8 @@
         <form class="form-signin">
             <div class="form-group">
                 <label for="originUrl" class="sr-only">Origin URL</label>
-                <input type="text" id="originUrl" name="originUrl" class="form-control" placeholder="Origin URL" required autofocus>
+                <input type="text" id="originUrl" name="originUrl" class="form-control" placeholder="Origin URL"
+                       required autofocus>
             </div>
             <button type="submit" class="btn btn-lg btn-success btn-block">Shorten URL</button>
         </form>
