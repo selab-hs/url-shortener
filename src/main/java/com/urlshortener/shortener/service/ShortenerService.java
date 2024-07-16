@@ -102,7 +102,6 @@ public class ShortenerService {
         }
         var findByMemberId = shortUrlRepository.findByMemberId(user.getId());
 
-
         return findByMemberId.stream()
                 .map(result -> ShortCodeAndSystemActionLogResponse
                         .from(
