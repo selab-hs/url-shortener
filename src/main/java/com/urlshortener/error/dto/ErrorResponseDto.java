@@ -8,16 +8,26 @@ import java.time.LocalDateTime;
 @Data
 public class ErrorResponseDto {
     private String message;
+    private String reason;
     private final LocalDateTime serverDateTime;
 
-    public ErrorResponseDto(String message) {
+    public ErrorResponseDto(String message, String reason) {
         this.message = message;
+        this.reason = reason;
         this.serverDateTime = LocalDateTime.now();
     }
 
     public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message) {
+
         return ResponseEntity
                 .status(message.getStatus())
-                .body(new ErrorResponseDto(message.name()));
+                .body(new ErrorResponseDto(message.name(), message.getMessage()));
+    }
+
+    public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message, String reason) {
+
+        return ResponseEntity
+                .status(message.getStatus())
+                .body(new ErrorResponseDto(message.name(), reason));
     }
 }

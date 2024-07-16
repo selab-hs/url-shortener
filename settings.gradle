@@ -3,4 +3,7 @@ pluginManagement {
         id 'org.jetbrains.kotlin.jvm' version '1.9.23'
     }
 }
-rootProject.name = 'url-shortener'
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
+rootProject.name = 'readys-link-api'

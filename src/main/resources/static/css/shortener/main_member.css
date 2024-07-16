@@ -1,0 +1,62 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+.header {
+    background-color: #8cd98c; /* 연두색 계열 배경색 */
+    padding: 10px 20px;
+    color: white;
+    text-align: right;
+}
+
+.header a {
+    color: white;
+    margin-left: 20px;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.content-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 250px);
+    padding: 40px;
+}
+
+.content {
+    margin-left: 270px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 40px;
+}
+
+.btn, input[type="text"] {
+    height: 50px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 100%;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>System Action Log Board</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/shortener/system_action_log_board.css" type="text/css"/>
+</head>
+<body>
+<div class="header">
+    <a href="#" onclick="login()">Login</a>
+    <a href="#" onclick="register()">Register</a>
+</div>
+<div class="sidebar">
+    <h2>Shortener</h2>
+    <a href="#">Home</a>
+    <a href="#">History</a>
+</div>
+<div class="container">
+    <h1 class="my-4">System Action Log Board</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>IP Address</th>
+            <th>Method</th>
+            <th>Path</th>
+            <th>User Agent</th>
+            <th>Host</th>
+            <th>Referer</th>
+        </tr>
+        </thead>
+        <tbody id="shortcodeLogTable">
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/js/shortener/system_action_log_board.js"></script>
+</div>
+</body>
+</html>
