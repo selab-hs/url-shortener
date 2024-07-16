@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+.header {
+    background-color: #8cd98c; /* 연두색 계열 배경색 */
+    padding: 10px 20px;
+    color: white;
+    text-align: right;
+}
+
+.header a {
+    color: white;
+    margin-left: 20px;
+}
+
+.content-wrapper {
+    position: fixed; /* 위치 고정 */
+    top: 50%; /* 상단에서 50% 위치 */
+    left: 50%; /* 왼쪽에서 50% 위치 */
+    transform: translate(-50%, -50%); /* 정확히 중앙 */
+    width: 80%; /* 내용의 너비 */
+    padding: 20px;
+    background-color: white; /* 배경색 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    border-radius: 8px; /* 모서리 둥글게 */
+}
+
+.btn, input[type="text"] {
+    height: 50px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 100%;
+}

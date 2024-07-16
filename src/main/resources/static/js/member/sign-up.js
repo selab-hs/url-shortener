@@ -82,7 +82,7 @@ const maxLength = (e) => {
 document.addEventListener("DOMContentLoaded", function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
         alert('유저 정보가 이미 존재합니다.');
-        location.href = "http://localhost:8080/main";
+        location.href = "http://localhost:8080/member_home";
         return;
     }
 
