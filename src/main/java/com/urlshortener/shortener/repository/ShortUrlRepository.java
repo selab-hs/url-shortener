@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
     List<ShortUrl> findAllByIdIn(List<Long> ids);
+
+    List<ShortUrl> findByMemberId(Long memberId);
 }

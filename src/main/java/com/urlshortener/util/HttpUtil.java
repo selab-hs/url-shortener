@@ -29,22 +29,6 @@ public class HttpUtil {
                 .orElse(request.getRemoteAddr());
     }
 
-    private static String noneMember(HttpServletRequest request) {
-        var headers = new String[]{
-                "X-Forwarded-For",
-                "Proxy-Client-IP",
-                "WL-Proxy-Client-IP",
-                "HTTP_CLIENT_IP",
-                "HTTP_X_FORWARDED_FOR"
-        };
-
-        return Arrays.stream(headers)
-                .map(request::getHeader)
-                .filter(ip -> ip != null && !ip.isEmpty() && !"unknown".equalsIgnoreCase(ip))
-                .findFirst()
-                .orElse(request.getRemoteAddr());
-    }
-
     /**
      * 쿠키 조회
      *
@@ -63,4 +47,3 @@ public class HttpUtil {
                 .orElseThrow(() -> new NotFoundClientIdHeaderException(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER));
     }
 }
-

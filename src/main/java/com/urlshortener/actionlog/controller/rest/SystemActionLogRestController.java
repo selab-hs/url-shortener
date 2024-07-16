@@ -35,7 +35,7 @@ public class SystemActionLogRestController {
      * 해당 shortCode 의 조회수를 조회 하는 API
      *
      * @param shortCode
-     * @return
+     * @return Long
      */
     @GetMapping("/{shortCode}/views")
     public ResponseEntity<?> getShortUrlViewCount(@PathVariable("shortCode") ShortCodeRequest shortCode) {

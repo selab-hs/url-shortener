@@ -22,4 +22,12 @@ public class ShortenerViewController {
     public String homePage() {
         return "main";
     }
+
+    /**
+     * @return 회원이 사용하는 화면을 반환합니다.
+     */
+    @GetMapping("/member_home")
+    public String sidePage() {
+        return "main_member_page";
+    }
 }

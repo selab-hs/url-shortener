@@ -1,5 +1,6 @@
 package com.urlshortener.shortener.service;
 
+import com.urlshortener.actionlog.repository.SystemActionLogRepository;
 import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.cache.CacheFactory;
 import com.urlshortener.cache.CacheService;
@@ -10,6 +11,7 @@ import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.dto.response.OriginUrlResponse;
+import com.urlshortener.shortener.dto.response.ShortCodeAndSystemActionLogResponse;
 import com.urlshortener.shortener.dto.response.ShortCodeResponse;
 import com.urlshortener.shortener.repository.ShortUrlRepository;
 import jakarta.annotation.Nullable;
@@ -20,6 +22,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
 
 @Slf4j
@@ -28,6 +33,7 @@ import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
 public class ShortenerService {
     private final ShortUrlRepository shortUrlRepository;
     private final CacheService cacheService;
+    private final SystemActionLogRepository systemActionLogRepository;
     private final EncryptionService encryptionService;
 
     @Value("${server.domain}")
@@ -44,6 +50,7 @@ public class ShortenerService {
             HttpServletRequest httpServletRequest
     ) {
         Long memberId = AuthUser.resolveMemberId(user);
+        log.info("userId={}", memberId);
 
         ShortUrl createdShortUrl = shortUrlRepository.save(
                 ShortUrl.from(
@@ -87,5 +94,22 @@ public class ShortenerService {
 
             return ShortUrlModel.from(shortUrl);
         });
+    }
+
+    public List<ShortCodeAndSystemActionLogResponse> getFindByMemberId(AuthUser user) {
+        if (user == null) {
+            throw new IllegalStateException();
+        }
+        var findByMemberId = shortUrlRepository.findByMemberId(user.getId());
+
+
+        return findByMemberId.stream()
+                .map(result -> ShortCodeAndSystemActionLogResponse
+                        .from(
+                                encryptionService.encode(
+                                        result.getId()),
+                                systemActionLogRepository.countByUrlId(
+                                        result.getId())))
+                .collect(Collectors.toList());
     }
 }

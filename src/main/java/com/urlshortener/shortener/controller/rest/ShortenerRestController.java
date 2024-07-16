@@ -67,4 +67,17 @@ public class ShortenerRestController {
 
         response.sendRedirect(originUrl);
     }
+
+    /**
+     * 사용자가 생성했던 shortCode 리스트 반환 API
+     *
+     * @param user
+     * @return List
+     */
+    @GetMapping("/api/v1/shorts")
+    public ResponseEntity<?> findByMemberId(AuthUser user) {
+        var result = shortenerService.getFindByMemberId(user);
+
+        return ResponseDto.ok(result);
+    }
 }
