@@ -12,7 +12,12 @@ public class HttpUtil {
     @Value("${security.separator}")
     public static String TOKEN_CODE;
 
-
+    /**
+     * ip 검사
+     *
+     * @param request
+     * @return
+     */
     public static String getClientIpAddress(HttpServletRequest request) {
         var headers = new String[]{
                 "X-Forwarded-For",

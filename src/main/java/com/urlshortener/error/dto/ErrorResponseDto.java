@@ -18,12 +18,14 @@ public class ErrorResponseDto {
     }
 
     public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message) {
+
         return ResponseEntity
                 .status(message.getStatus())
                 .body(new ErrorResponseDto(message.name(), message.getMessage()));
     }
 
     public static ResponseEntity<ErrorResponseDto> of(ErrorMessage message, String reason) {
+
         return ResponseEntity
                 .status(message.getStatus())
                 .body(new ErrorResponseDto(message.name(), reason));

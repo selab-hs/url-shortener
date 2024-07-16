@@ -17,7 +17,7 @@ public class SystemActionLogResponse {
     private String userAgent;
     private String host;
     private String referer;
-    
+
     public static SystemActionLogResponse from(SystemActionLog log) {
         return SystemActionLogResponse.builder()
                 .ipAddress(log.getIpAddress())

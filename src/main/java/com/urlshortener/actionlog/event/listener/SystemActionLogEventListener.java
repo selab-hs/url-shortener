@@ -29,7 +29,7 @@ public class SystemActionLogEventListener {
                 event.getHost(),
                 event.getReferer()
         );
-        
+
         systemActionLogRepository.save(systemActionLog);
     }
 }

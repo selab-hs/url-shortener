@@ -6,6 +6,7 @@ import java.time.Duration;
 
 public class CacheFactory {
     public static Cache<ShortUrlModel> makeShortUrl(Long id) {
+
         return new Cache<>(
                 "url:short:" + id,
                 ShortUrlModel.class,
