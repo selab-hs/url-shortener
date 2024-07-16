@@ -1,18 +1,25 @@
 $(document).ready(function () {
     const authToken = localStorage.getItem('X-READYS-AUTH-TOKEN');
+    const shorturl = window.location.href.split("/");
+    console.log('/api/v1/system-action-logs/' + shorturl[shorturl.length - 1]);
+
     $.ajax({
-        url: '/api/v1/shorts',
+        url: '/api/v1/system-action-logs/' + shorturl[shorturl.length - 1],
         type: 'GET',
         headers: {
             'X-READYS-AUTH-TOKEN': authToken // Set Authorization header
         },
         dataType: 'json',
         success: function (data) {
-            let tableBody = $('#shortcodeTableBody');
+            let tableBody = $('#shortcodeLogTable');
             data.data.forEach(function (item) {
                 let row = $('<tr></tr>');
-                row.append(`<td><a href="/history/${item.shortcode}">${item.shortcode}</a></td>`);
-                row.append(`<td>${item.view}</td>`);
+                row.append(`<td>${item.ipAddress}</td>`);
+                row.append(`<td>${item.method}</td>`);
+                row.append(`<td>${item.path}</td>`);
+                row.append(`<td>${item.userAgent}</td>`);
+                row.append(`<td>${item.host}</td>`);
+                row.append(`<td>${item.referer}</td>`);
                 tableBody.append(row);
             });
         },

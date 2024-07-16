@@ -1,6 +1,37 @@
+.header {
+    background-color: #8cd98c; /* 연두색 계열 배경색 */
+    padding: 10px 20px;
+    color: white;
+    text-align: right;
+}
+
+.header a {
+    color: white;
+    margin-left: 20px;
+}
+
 .center-div {
     margin-top: 50px;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    font-size: 18px;
 }
