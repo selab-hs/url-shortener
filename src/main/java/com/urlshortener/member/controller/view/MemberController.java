@@ -12,7 +12,7 @@ public class MemberController {
      */
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "login_page";
     }
 
     /**
@@ -20,6 +20,6 @@ public class MemberController {
      */
     @GetMapping("/sign-up")
     public String signUpPage() {
-        return "sign-up";
+        return "sign_up_page";
     }
 }

@@ -13,7 +13,7 @@ public class SystemActionLogViewController {
 
     @GetMapping("/history/{shortCode}")
     public String getSystemActionLogViewHome() {
-        return "system_action_log_board";
+        return "system_action_log_board_page";
     }
 
     @GetMapping("/logs")
