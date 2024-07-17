@@ -12,7 +12,7 @@ public class ShortenerViewController {
      */
     @GetMapping("/main")
     public String page() {
-        return "main";
+        return "main_page";
     }
 
     /**
@@ -20,7 +20,7 @@ public class ShortenerViewController {
      */
     @GetMapping("/")
     public String homePage() {
-        return "main";
+        return "main_page";
     }
 
     /**
