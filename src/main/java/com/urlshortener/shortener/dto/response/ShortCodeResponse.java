@@ -1,15 +1,14 @@
 package com.urlshortener.shortener.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class ShortCodeResponse {
     private String shortCode;
 
     public static ShortCodeResponse from(String shortCode){
-        ShortCodeResponse shortCodeResponse = new ShortCodeResponse();
-        shortCodeResponse.shortCode = shortCode;
-
-        return shortCodeResponse;
+        return new ShortCodeResponse(shortCode);
     }
 }

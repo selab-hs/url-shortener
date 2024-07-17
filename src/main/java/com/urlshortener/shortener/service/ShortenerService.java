@@ -1,7 +1,7 @@
 package com.urlshortener.shortener.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.urlshortener.actionlog.repository.SystemActionLogRepository;
+import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.cache.CacheFactory;
 import com.urlshortener.cache.CacheService;
 import com.urlshortener.error.dto.ErrorMessage;
@@ -11,18 +11,29 @@ import com.urlshortener.shortener.dto.model.ShortUrlModel;
 import com.urlshortener.shortener.dto.request.OriginUrlRequest;
 import com.urlshortener.shortener.dto.request.ShortCodeRequest;
 import com.urlshortener.shortener.dto.response.OriginUrlResponse;
+import com.urlshortener.shortener.dto.response.ShortCodeAndSystemActionLogResponse;
 import com.urlshortener.shortener.dto.response.ShortCodeResponse;
 import com.urlshortener.shortener.repository.ShortUrlRepository;
+import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ShortenerService {
-    private final ShortUrlRepository originUrlRepository;
+    private final ShortUrlRepository shortUrlRepository;
     private final CacheService cacheService;
+    private final SystemActionLogRepository systemActionLogRepository;
     private final EncryptionService encryptionService;
 
     @Value("${server.domain}")
@@ -33,17 +44,28 @@ public class ShortenerService {
      * @return originUrl -> shortUrl 로 변환 값을 'ShortUrlResponse' 로 반환합니다.
      */
     @Transactional
-    public ShortCodeResponse createShortUrl(OriginUrlRequest request) {
-        ShortUrl url = originUrlRepository.save(ShortUrl.from(request.getOriginUrl()));
-        cacheService
-                .asyncSet(CacheFactory
-                                .makeCachedQuiz(
-                                        url.getId()),
-                        ShortUrlModel.from(
-                                url.getId(),
-                                url.getOriginUrl(),
-                                url.getCreatedAt()));
-        var shortCode = encryptionService.encode(url.getId());
+    public ShortCodeResponse createShortUrl(
+            @Nullable AuthUser user,
+            OriginUrlRequest request,
+            HttpServletRequest httpServletRequest
+    ) {
+        Long memberId = AuthUser.resolveMemberId(user);
+        log.info("userId={}", memberId);
+
+        ShortUrl createdShortUrl = shortUrlRepository.save(
+                ShortUrl.from(
+                        request.getOriginUrl(),
+                        memberId,
+                        getClientIdFromCookie(httpServletRequest)
+                )
+        );
+
+        cacheService.asyncSet(
+                CacheFactory.makeShortUrl(createdShortUrl.getId()),
+                ShortUrlModel.from(memberId, createdShortUrl)
+        );
+
+        var shortCode = encryptionService.encode(createdShortUrl.getId());
 
         return ShortCodeResponse.from(domain + shortCode);
     }
@@ -58,18 +80,35 @@ public class ShortenerService {
     @Transactional(readOnly = true)
     public OriginUrlResponse getOriginUrl(ShortCodeRequest request) {
         var originUrlId = encryptionService.decode(request.getShortCode());
-        var cache = CacheFactory.makeCachedQuiz(originUrlId);
-        var resultUrl = cacheService.get(cache, () -> {
-            var findUrl = originUrlRepository
+
+        var resultUrl = getShortUrl(originUrlId);
+
+        return OriginUrlResponse.from(resultUrl);
+    }
+
+    public ShortUrlModel getShortUrl(long originUrlId) {
+        return cacheService.get(CacheFactory.makeShortUrl(originUrlId), () -> {
+            var shortUrl = shortUrlRepository
                     .findById(originUrlId)
                     .orElseThrow(() -> new NotFoundUrlException(ErrorMessage.NOT_FOUND_URL));
 
-            return ShortUrlModel.from(
-                    findUrl.getId(),
-                    findUrl.getOriginUrl(),
-                    findUrl.getCreatedAt());
-        }).getOriginalUrl();
+            return ShortUrlModel.from(shortUrl);
+        });
+    }
 
-        return OriginUrlResponse.from(resultUrl);
+    public List<ShortCodeAndSystemActionLogResponse> getFindByMemberId(AuthUser user) {
+        if (user == null) {
+            throw new IllegalStateException();
+        }
+        var findByMemberId = shortUrlRepository.findByMemberId(user.getId());
+
+        return findByMemberId.stream()
+                .map(result -> ShortCodeAndSystemActionLogResponse
+                        .from(
+                                encryptionService.encode(
+                                        result.getId()),
+                                systemActionLogRepository.countByUrlId(
+                                        result.getId())))
+                .collect(Collectors.toList());
     }
 }

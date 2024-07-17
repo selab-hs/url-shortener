@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "BMJ";
+    src: url("../font/BMJUA_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMD";
+    src: url("../font/BMDOHYEON_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHA";
+    src: url("../font/BMHANNAAir_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHP";
+    src: url("../font/BMHANNAPro.ttf");
+}
+
+@font-face {
+    font-family: "BMY";
+    src: url("../font/BMYEONSUNG_ttf.ttf");
+}
+

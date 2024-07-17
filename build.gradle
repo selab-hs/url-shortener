@@ -2,11 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
-    id 'org.jetbrains.kotlin.jvm'
 }
 
-group = 'com'
-version = '0.0.1'
+group = 'com.readys'
 
 java {
     toolchain {
@@ -31,6 +29,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    /** 비밀번호 암호화 */
+    implementation 'org.springframework.security:spring-security-crypto'
+
+    /** jwt */
+    implementation "io.jsonwebtoken:jjwt:0.9.1"
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation 'javax.activation:activation:1.1.1'
+
     /** lombok */
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -38,12 +45,21 @@ dependencies {
     /** database */
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    /** swagger */
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+    runtimeOnly 'com.github.therapi:therapi-runtime-javadoc-scribe:0.15.0'
+    annotationProcessor 'com.github.therapi:therapi-runtime-javadoc-scribe:0.15.0'
+
     /** test */
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
 
     /** thymeleaf */
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.named('test') {
