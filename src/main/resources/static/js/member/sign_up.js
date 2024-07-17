@@ -30,7 +30,7 @@ function email_duplication_check() {
     }
 
     $.ajax({
-        url: "http://localhost:8080/api/v1/members/email-check?email=" + email.val(),
+        url: "/api/v1/members/email-check?email=" + email.val(),
         type: "GET",
         success: function () {
             alert("중복되지 않은 이메일입니다.");
@@ -82,7 +82,7 @@ const maxLength = (e) => {
 document.addEventListener("DOMContentLoaded", function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
         alert('유저 정보가 이미 존재합니다.');
-        location.href = "http://localhost:8080/member_home";
+        location.href = "/member_home";
         return;
     }
 
@@ -107,13 +107,13 @@ function sign_up_submit() {
         });
 
         $.ajax({
-            url: "http://localhost:8080/api/v1/members",
+            url: "/api/v1/members",
             data: data,
             contentType: 'application/json',
             type: "POST",
             success: function () {
                 alert("회원 가입 성공 !");
-                location.href = "http://localhost:8080/login";
+                location.href = "https://readys.link/login";
             },
             error: function (response) {
                 alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);

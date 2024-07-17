@@ -1,6 +1,6 @@
 $(document).ready(function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
-        location.href = "http://localhost:8080/member_home";
+        location.href = "https://readys.link/member_home";
     }
 
     // UUID 생성 함수
@@ -63,7 +63,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('.alert').remove();
                 const alertSuccess = '<div class="alert alert-success mt-4">' +
-                    '<a class="form-control" href="/' + response.data.replace("http://localhost:8080/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
+                    '<a class="form-control" href="/' + response.data.replace("https://readys.link/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
                     '</div>';
                 $('.form-group').after(alertSuccess);
             },
