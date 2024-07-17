@@ -12,12 +12,4 @@ public class OriginUrlResponse {
     public static OriginUrlResponse from(ShortUrlModel shortUrl) {
         return new OriginUrlResponse(shortUrl.getOriginalUrl());
     }
-
-    public String getOriginUrlWithHttp() {
-        if (!originUrl.startsWith("http://") && !originUrl.startsWith("https://")) {
-            return "http://" + originUrl;
-        } else {
-            return originUrl;
-        }
-    }
 }
