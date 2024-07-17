@@ -15,7 +15,7 @@ $(document).ready(function () {
             let tableBody = $('#shortcodeTableBody');
             data.data.forEach(function (item) {
                 let row = $('<tr></tr>');
-                row.append(`<td><a href="/history/${item.shortcode}">"https://readys.link/"+ ${item.shortcode}</a></td>`);
+                row.append(`<td><a href="/history/${item.shortcode}"> ${item.shortcode}</a></td>`);
                 row.append(`<td>${item.view}</td>`);
                 tableBody.append(row);
             });
