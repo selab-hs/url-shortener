@@ -5,16 +5,19 @@
     <title>System Action Log Board</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/shortener/system_action_log_board.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/layout/layout.css" type="text/css"/>
+    <script src="/js/layout/layout.js"></script>
 </head>
 <body>
 <div class="header">
-    <a href="#" onclick="login()">Login</a>
-    <a href="#" onclick="register()">Register</a>
+    <a id="loginButton" href="/login" onclick="login()">Login</a>
+    <a id="signUp" href="/sign-up" onclick="register()">Register</a>
+    <a id="logoutButton" href="/main" onclick="logout()"> Logout</a>
 </div>
 <div class="sidebar">
     <h2>Shortener</h2>
-    <a href="#">Home</a>
-    <a href="#">History</a>
+    <a href="/member_home">Home</a>
+    <a href="/logs">History</a>
 </div>
 <div class="container">
     <h1 class="my-4">System Action Log Board</h1>

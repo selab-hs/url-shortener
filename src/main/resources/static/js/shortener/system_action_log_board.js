@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") == null) {
+        location.href = "http://localhost:8080/main";
+    }
+
     const authToken = localStorage.getItem('X-READYS-AUTH-TOKEN');
     const shorturl = window.location.href.split("/");
     console.log('/api/v1/system-action-logs/' + shorturl[shorturl.length - 1]);

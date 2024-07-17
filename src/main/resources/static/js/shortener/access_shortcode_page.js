@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") == null) {
+        location.href = "http://localhost:8080/main";
+    }
+
     const authToken = localStorage.getItem('X-READYS-AUTH-TOKEN');
     $.ajax({
         url: '/api/v1/shorts',
