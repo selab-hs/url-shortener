@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const authToken = localStorage.getItem('X-READYS-AUTH-TOKEN');
 
         $.ajax({
-            url: '/api/v1/short',
+            url: '/api/v1/shorts',
             type: 'POST',
             contentType: 'application/json',
             headers: {

@@ -53,7 +53,7 @@ $(document).ready(function () {
         const clientId = getClientIdFromCookie();
 
         $.ajax({
-            url: '/api/v1/short',
+            url: '/api/v1/shorts',
             type: 'POST',
             contentType: 'application/json',
             headers: {

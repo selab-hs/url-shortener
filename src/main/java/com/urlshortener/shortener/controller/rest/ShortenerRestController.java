@@ -33,7 +33,7 @@ public class ShortenerRestController {
      * @return shortUrl 를 반환합니다.
      */
     @RateLimit(type = CREATE_SHORT_URL, value = 10, durationMills = 60000)
-    @PostMapping("/api/v1/short")
+    @PostMapping("/api/v1/shorts")
     public ResponseEntity<?> createShortUrl(
             /** 인증되지 않은 사용자도 사용 가능해야 한다. */
             @Nullable AuthUser user,
