@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") == null) {
-        location.href = "https://readys.link/main";
+        location.href = "/main";
     }
 
     // UUID 생성 함수

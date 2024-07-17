@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
         alert('유저 정보가 이미 존재합니다.');
-        location.href = "https://readys.link/member_home";
+        location.href = "/member_home";
     }
 });
 

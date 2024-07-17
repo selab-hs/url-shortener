@@ -113,7 +113,7 @@ function sign_up_submit() {
             type: "POST",
             success: function () {
                 alert("회원 가입 성공 !");
-                location.href = "https://readys.link/login";
+                location.href = "/login";
             },
             error: function (response) {
                 alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
-        location.href = "https://readys.link/member_home";
+        location.href = "/member_home";
     }
 
     // UUID 생성 함수

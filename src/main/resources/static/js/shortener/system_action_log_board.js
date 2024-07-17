@@ -1,6 +1,6 @@
 $(document).ready(function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") == null) {
-        location.href = "https://readys.link/main";
+        location.href = "/main";
     }
 
     const authToken = localStorage.getItem('X-READYS-AUTH-TOKEN');
