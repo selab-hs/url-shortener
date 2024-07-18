@@ -2,6 +2,11 @@
 
 > **긴 URL 을 짧은 URL로 변환하는 서비스 입니다.**   
 
+### 🏭 Project 아키텍쳐
+
+![제목 없는 다이어그램 drawio](https://github.com/user-attachments/assets/43f088f7-387b-4d94-bdfd-e7d8e31a41be)
+
+
 ## 📌 화면 구성
 
 ### 비회원 화면
@@ -22,11 +27,6 @@
 <img width="2557" alt="스크린샷 2024-07-18 오후 11 34 43" src="https://github.com/user-attachments/assets/1d6f888b-a4f1-40b0-b073-48c54a765101">
     Member가 생성한 shortUrl에 접근 기록 게시판
 </p>
-
-### 🏭 Project 아키텍쳐
-
-![ReadyLink](https://github.com/user-attachments/assets/4517b69b-696e-4ecd-aa6c-318ba6a05782)
-
 
 ### 📋 주요 기능 소개
 
