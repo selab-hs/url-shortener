@@ -1,14 +1,18 @@
-/*html, body {*/
-/*    height: 100%;*/
-/*    margin: 0;*/
-/*    background-color: #f8f9fa;*/
-/*}*/
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #f8f9fa;
+}
 
-/*.container {*/
-/*    position: fixed;*/
-/*    top: 15%;*/
-/*    left: 50%;*/
-/*    transform: translate(-50%, -50%);*/
-/*    width: calc(100% - 250px);*/
-/*    padding: 40px;*/
-/*}*/
+.container {
+    position: absolute;
+    top: calc(50% + 50px); /* header와 일정한 간격을 유지하도록 위치 조정 */
+    left: calc(50% + 125px); /* sidebar의 너비(250px)의 반을 더한 값 */
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 300px); /* 양쪽 여백 50px씩 추가 */
+    max-width: 800px;
+    min-width: 300px;
+}
