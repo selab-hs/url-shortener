@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             success: function (response) {
                 $('.alert').remove();
                 const alertSuccess = '<div class="alert alert-success mt-4">' +
-                    '<a class="form-control" href="/' + response.data.replace("http://localhost:8080/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
+                    '<a class="form-control" href="/' + response.data.replace("https://readys.link/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
                     '</div>';
                 $('.form-group').after(alertSuccess);
             },
