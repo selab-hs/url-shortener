@@ -25,6 +25,8 @@
 
 ### 🏭 Project 아키텍쳐
 
+![ReadyLink](https://github.com/user-attachments/assets/4517b69b-696e-4ecd-aa6c-318ba6a05782)
+
 
 ### 📋 주요 기능 소개
 
