@@ -4,7 +4,7 @@
 
 ### 🏭 Project 아키텍쳐
 
-![제목 없는 다이어그램 drawio](https://github.com/user-attachments/assets/43f088f7-387b-4d94-bdfd-e7d8e31a41be)
+![readys-link](https://github.com/user-attachments/assets/e2862b7e-c67f-4fb6-8f4d-01b188de3aed)
 
 
 ## 📌 화면 구성
