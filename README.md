@@ -4,8 +4,7 @@
 
 ### 🏭 Project 아키텍쳐
 
-![readys-link](https://github.com/user-attachments/assets/e2862b7e-c67f-4fb6-8f4d-01b188de3aed)
-
+![readys-link](https://github.com/user-attachments/assets/97a11075-1539-4ff9-85b3-0a88feacd272)
 
 ## 📌 화면 구성
 
