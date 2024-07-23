@@ -96,6 +96,12 @@ public class ShortenerService {
         });
     }
 
+    /**
+     * 유저가 생성한 url 을 제공하는 메서드
+     *
+     * @param user
+     * @return
+     */
     public List<ShortCodeAndSystemActionLogResponse> getFindByMemberId(AuthUser user) {
         if (user == null) {
             throw new IllegalStateException();

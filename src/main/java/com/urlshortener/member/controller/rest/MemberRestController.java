@@ -5,6 +5,7 @@ import com.urlshortener.member.domain.dto.request.JoinMemberRequest;
 import com.urlshortener.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,10 @@ public class MemberRestController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<?> createMember(@RequestBody JoinMemberRequest request) {
-        var member = memberService.createMember(request);
+    public ResponseEntity<?> createMember(
+            @RequestBody JoinMemberRequest request,
+            HttpServletRequest httpRequest) {
+        var member = memberService.createMember(request, httpRequest);
 
         return ResponseDto.created(member);
     }

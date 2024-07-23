@@ -9,7 +9,7 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 @Repository
-public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
+public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long>, ShortUrlCustomRepository {
     List<ShortUrl> findAllByIdIn(List<Long> ids);
 
     List<ShortUrl> findByMemberId(Long memberId);
