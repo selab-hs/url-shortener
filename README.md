@@ -2,14 +2,30 @@
 
 > **긴 URL 을 짧은 URL로 변환하는 서비스 입니다.**   
 
-## 📌 화면 구성
-<p align="center">
-    <img src="https://github.com/selab-hs/url-shortener/assets/76032947/1abab77e-d71c-44af-9487-bd2183efddf6" alt="First Image" width="45%"/>
-  <img src="https://github.com/selab-hs/url-shortener/assets/76032947/0798670d-4b43-401c-be69-a583e5036e7c" alt="Second Image" width="45%"/>
-</p>
-
 ### 🏭 Project 아키텍쳐
 
+![readys-link](https://github.com/user-attachments/assets/97a11075-1539-4ff9-85b3-0a88feacd272)
+
+## 📌 화면 구성
+
+### 비회원 화면
+<p align="center">
+    <img width="1282" alt="스크린샷 2024-07-18 오후 11 33 07" src="https://github.com/user-attachments/assets/90631055-f033-4cc1-8bf8-944059294966">
+    <img width="2558" alt="스크린샷 2024-07-18 오후 11 33 18" src="https://github.com/user-attachments/assets/932fed0d-bba0-420b-aec8-0477bcb39d5e">
+</p>
+
+### 회원 가입/로그인
+<img width="770" alt="스크린샷 2024-07-18 오후 11 33 38" src="https://github.com/user-attachments/assets/10ea3b32-579c-4d9f-8fc6-59051b643721">
+<img width="749" alt="스크린샷 2024-07-18 오후 11 33 46" src="https://github.com/user-attachments/assets/c7da024d-277e-44d0-bcfb-0b55bc1903f7">
+
+
+### 회원 화면
+<p align="center">
+<img width="1277" alt="스크린샷 2024-07-18 오후 11 34 21" src="https://github.com/user-attachments/assets/05b4e422-7660-4cf5-8caa-bec4cedee409">
+    Member가 생성한 shortUrl 확인 게시판
+<img width="2557" alt="스크린샷 2024-07-18 오후 11 34 43" src="https://github.com/user-attachments/assets/1d6f888b-a4f1-40b0-b073-48c54a765101">
+    Member가 생성한 shortUrl에 접근 기록 게시판
+</p>
 
 ### 📋 주요 기능 소개
 
