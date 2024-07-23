@@ -21,6 +21,10 @@
     padding: 20px;
 }
 
+.sidebar h2 {
+    margin-bottom: 50px;
+}
+
 .sidebar a {
     color: white;
     text-decoration: none;

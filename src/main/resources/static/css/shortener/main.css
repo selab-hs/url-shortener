@@ -36,3 +36,7 @@ html, body {
 input[type="text"] {
     width: 100%;
 }
+
+#copyButton {
+    display: none;
+}
