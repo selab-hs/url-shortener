@@ -4,13 +4,10 @@ import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.url.NotFoundClientIdHeaderException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 
 public class HttpUtil {
-    @Value("${security.separator}")
-    public static String TOKEN_CODE;
 
     /**
      * ip 검사
