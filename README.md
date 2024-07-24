@@ -1,38 +1,79 @@
 # ✂️ url-shortner
 
+
 > **긴 URL 을 짧은 URL로 변환하는 서비스 입니다.**   
+> **개발 기간** : 2024.06 ~ 2024.07   
 
-목차
+## 개발팀 소개
 ---
-[1. 아키텍처](#project-아키텍처)   
-[2. 화면구성](#화면-구성)   
+
+
+
+## 목차
+
+[1. 프로젝트 소개](#프로젝트-소개)
+
+[2. Stacks](#stacks)   
+&nbsp;&nbsp;&nbsp;&nbsp;[2-1. Environment](#enviroment)   
+&nbsp;&nbsp;&nbsp;&nbsp;[2-2. Development](#development)   
+&nbsp;&nbsp;&nbsp;&nbsp;[2-3. CI/CD](#CI-CD)
+
 [3. 주요 기능 소개](#주요-기능-소개)   
+[4. 아키텍처](#project-아키텍처)
+
+[5. 화면 구성](#화면-구성)   
+&nbsp;&nbsp;&nbsp;&nbsp;[5-1. 비회원](#비회원-화면)   
+&nbsp;&nbsp;&nbsp;&nbsp;[5-2. 회원 가입/로그인](#회원-가입/로그인)   
+&nbsp;&nbsp;&nbsp;&nbsp;[5-3. 회원](#회원-화면)
+  
+
+---
 
 
-### Project 아키텍처
+### 프로젝트 소개
 
-![readys-link](https://github.com/user-attachments/assets/97a11075-1539-4ff9-85b3-0a88feacd272)
+<div>
+    
+**사용하기 긴 url을 짧은 길이로 url을 사용하기 위해 시작된 프로젝트입니다.**  
+프로젝트는 간편한 서비스를 통해 대량의 요청을 견디는 아키텍커를 적용하여 안정적인 서비스를 재공합니다.   
+프로젝트의 기반은 "가상면접 사례로 배우는 대규모 시스템 설계 기초" 8장의 기반으로 추가적인 기능을 더해 진행된 프로젝트입니다.
+프로젝트를 통해 대량의 트레픽을 감당이 가능한 서버를 구축하는 솔루션을 공부하고 적용하여 익히기 위한 토이 프로젝트 입니다. 
 
-## 화면 구성
+---
 
-### 비회원 화면
-<p align="center">
-    <img width="1282" alt="스크린샷 2024-07-18 오후 11 33 07" src="https://github.com/user-attachments/assets/90631055-f033-4cc1-8bf8-944059294966">
-    <img width="2558" alt="스크린샷 2024-07-18 오후 11 33 18" src="https://github.com/user-attachments/assets/932fed0d-bba0-420b-aec8-0477bcb39d5e">
-</p>
+</div>
 
-### 회원 가입/로그인
-<img width="770" alt="스크린샷 2024-07-18 오후 11 33 38" src="https://github.com/user-attachments/assets/10ea3b32-579c-4d9f-8fc6-59051b643721">
-<img width="749" alt="스크린샷 2024-07-18 오후 11 33 46" src="https://github.com/user-attachments/assets/c7da024d-277e-44d0-bcfb-0b55bc1903f7">
+## Stacks
+
+<div align="center">
+    
+### Environment
+
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+
+### Development
+
+<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Redis-FF4438?style=for-the-badge&logo=redis&logoColor=white"/>
 
 
-### 회원 화면
-<p align="center">
-<img width="1277" alt="스크린샷 2024-07-18 오후 11 34 21" src="https://github.com/user-attachments/assets/05b4e422-7660-4cf5-8caa-bec4cedee409">
-    Member가 생성한 shortUrl 확인 게시판
-<img width="2557" alt="스크린샷 2024-07-18 오후 11 34 43" src="https://github.com/user-attachments/assets/1d6f888b-a4f1-40b0-b073-48c54a765101">
-    Member가 생성한 shortUrl에 접근 기록 게시판
-</p>
+<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"/> <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/>
+
+### CI CD
+
+<img src="https://img.shields.io/badge/GithubAction-2088FF?style=for-the-badge&logo=github&logoColor=black"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=black"/>
+
+### Communication
+
+<img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=black"/>
+
+---
+
+</div>
 
 ### 주요 기능 소개
 
@@ -58,3 +99,54 @@
    - API의 응답 속도는 최대 70ms이다. (서버의 사양에 따라 달라짐)
 
 5. 긴 데이터에 대해서는 메모리 이슈가 발생할 수 있기 때문에, 압축이 필요.
+
+
+### Project 아키텍처
+
+<div align="center">
+    
+![readys-link](https://github.com/user-attachments/assets/97a11075-1539-4ff9-85b3-0a88feacd272)
+
+---
+
+</div>
+
+## 화면 구성
+
+### 비회원 화면
+
+<div align="center">
+
+| URL 생성 전 화면   | URL 생성 후 화면  | 
+|--------------|--------------|
+| <img  src="https://github.com/user-attachments/assets/90631055-f033-4cc1-8bf8-944059294966" width="650"> | <img  src="https://github.com/user-attachments/assets/932fed0d-bba0-420b-aec8-0477bcb39d5e" width="650"> |
+
+</div>
+
+
+### 회원 가입/로그인
+
+
+<div align="center">
+
+| 로그인 화면   |  회원 가입 화면  | 
+|--------------|--------------|
+| <img  src="https://github.com/user-attachments/assets/10ea3b32-579c-4d9f-8fc6-59051b643721" width="650"> | <img src="https://github.com/user-attachments/assets/c7da024d-277e-44d0-bcfb-0b55bc1903f7" width="650"> |
+
+</div>
+
+### 회원 화면
+
+<div align="center">
+
+|  Member가 생성한 shortUrl 확인 게시판  |
+|--------------|
+| <img src="https://github.com/user-attachments/assets/05b4e422-7660-4cf5-8caa-bec4cedee409" width="1300"> |
+
+| Member가 생성한 shortUrl에 접근 기록 게시판 |
+|--------------|
+| <img src="https://github.com/user-attachments/assets/1d6f888b-a4f1-40b0-b073-48c54a765101" width="1300"> | 
+
+</div>
+
+---
