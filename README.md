@@ -23,7 +23,7 @@
 
 [3. 주요 기능 소개](#주요-기능-소개)   
 &nbsp;&nbsp;&nbsp;&nbsp;[3-1. 프로젝트 제악 사항](#프로젝트-제악-사항)   
-&nbsp;&nbsp;&nbsp;&nbsp;[3-2. Issu 해결](#issu-해결)   
+&nbsp;&nbsp;&nbsp;&nbsp;[3-2. Issue 해결](#issue-해결)   
 
 [4. 아키텍처](#project-아키텍처)
 
@@ -99,7 +99,7 @@
 
 ---
 
-## 프로젝트 제악 사항
+## 프로젝트 제약 사항
 
    
     - 단축 URL에는 숫자와 영문자만 사용할 수 있다.
@@ -129,7 +129,7 @@
 
 ---
 
-## Issu 해결 
+## Issue 해결 
 
 ### As Is
 
@@ -199,9 +199,10 @@
 
 | URL 생성 전 화면   | URL 생성 후 화면  | 
 |--------------|--------------|
-| <img  src="https://github.com/user-attachments/assets/90631055-f033-4cc1-8bf8-944059294966" width="650"> | <img  src="https://github.com/user-attachments/assets/932fed0d-bba0-420b-aec8-0477bcb39d5e" width="650"> |
+| <img  src="https://github.com/user-attachments/assets/90631055-f033-4cc1-8bf8-944059294966" width="650"> | <img  src= "https://github.com/user-attachments/assets/2310534c-277d-4185-adf6-3ddf09f2b37b" width="650"> |
 
 </div>
+
 
 
 ### 회원가입 로그인
