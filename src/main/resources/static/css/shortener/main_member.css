@@ -29,3 +29,18 @@ html, body {
 input[type="text"] {
     width: 100%;
 }
+
+#copyButtonContainer {
+    display: none;
+}
+
+.btn-custom-green {
+    background-color: #A5DF00;
+    border-color: #A5DF00;
+    color: white;
+}
+
+.btn-custom-green:hover {
+    background-color: #77dd77;
+    border-color: #77dd77;
+}

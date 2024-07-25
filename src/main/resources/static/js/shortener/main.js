@@ -1,3 +1,12 @@
+function copyToClipboard(text) {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+}
+
 $(document).ready(function () {
     if (window.localStorage.getItem("X-READYS-AUTH-TOKEN") != null) {
         location.href = "/member_home";
@@ -66,11 +75,18 @@ $(document).ready(function () {
                     '<a class="form-control" href="/' + response.data.replace("https://readys.link/", "") + '" target="_blank">URL: ' + response.data + '</a>' +
                     '</div>';
                 $('.form-group').after(alertSuccess);
+
+                $('#copyButtonContainer').show();
+                $('#copyButton').off('click').on('click', function () {
+                    copyToClipboard(response.data);
+                    alert('URL copied to clipboard');
+                });
             },
             error: function (response) {
                 $('.alert').remove();
                 const alertError = '<div class="alert alert-danger mt-4">' + JSON.parse(response.responseText).reason + '</div>';
                 $('.form-group').after(alertError);
+                $('#copyButtonContainer').hide();
             }
         });
     });
