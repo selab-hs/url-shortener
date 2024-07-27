@@ -3,7 +3,7 @@ package com.urlshortener.ratelimit.aspect;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.url.RateLimitExceededException;
 import com.urlshortener.ratelimit.annotation.RateLimit;
-import com.urlshortener.ratelimit.service.RateLimitService;
+import com.urlshortener.ratelimit.facade.LettuceLockStockFacade;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,7 +17,7 @@ import static com.urlshortener.util.HttpUtil.getClientIdFromCookie;
 @Component
 @RequiredArgsConstructor
 public class RateLimitAspect {
-    private final RateLimitService rateLimitService;
+    private final LettuceLockStockFacade lettuceLockStockFacade;
     private final HttpServletRequest request;
 
     /**
@@ -30,7 +30,7 @@ public class RateLimitAspect {
     public Object checkRateLimit(ProceedingJoinPoint joinPoint, RateLimit rateLimit) throws Throwable {
         String clientId = getClientIdFromCookie(request);
 
-        if (!rateLimitService.tryConsume(clientId, rateLimit)) {
+        if (!lettuceLockStockFacade.limitIncrease(clientId, rateLimit)) {
             throw new RateLimitExceededException(
                     ErrorMessage.RATE_LIMIT_EXCEEDED,
                     rateLimit.type().getMessage()
