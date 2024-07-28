@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MemberController {
     /**
+     * 로그인 페이지 접속
+     *
      * @return 로그인 화면을 반환합니다.
      */
     @GetMapping("/login")
@@ -16,6 +18,8 @@ public class MemberController {
     }
 
     /**
+     * 회원가입 페이지 접속
+     *
      * @return 회원가입 화면을 반환합니다.
      */
     @GetMapping("/sign-up")

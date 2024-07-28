@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShortenerViewController {
     /**
+     * 메인 페이지 접속
+     *
      * @return 메인 화면을 반환합니다.
      */
     @GetMapping("/main")
@@ -16,6 +18,8 @@ public class ShortenerViewController {
     }
 
     /**
+     * 메인 페이지 접속
+     *
      * @return 메인 화면을 반환합니다.
      */
     @GetMapping("/")
@@ -24,6 +28,8 @@ public class ShortenerViewController {
     }
 
     /**
+     * 회원 페이지 접속
+     *
      * @return 회원이 사용하는 화면을 반환합니다.
      */
     @GetMapping("/member_home")

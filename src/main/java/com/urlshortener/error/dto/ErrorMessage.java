@@ -8,7 +8,7 @@ public enum ErrorMessage {
     /**
      * 서버 내부 오류
      */
-    INTERNAL_SERVER_ERROR(HttpStatus.BAD_REQUEST, "내부 서버 오류"),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "내부 서버 오류"),
 
     NOT_FOUND_URL(HttpStatus.NOT_FOUND, "존재하지 않는 url"),
 

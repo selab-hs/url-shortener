@@ -1,8 +1,8 @@
 package com.urlshortener.auth.token;
 
+import com.urlshortener.auth.model.AuthToken;
 import com.urlshortener.auth.model.AuthUser;
 import com.urlshortener.auth.model.AuthUserImpl;
-import com.urlshortener.auth.model.AuthToken;
 import com.urlshortener.auth.service.AuthService;
 import com.urlshortener.error.dto.ErrorMessage;
 import com.urlshortener.error.exception.auth.ReadysExpiredJwtException;
@@ -72,7 +72,6 @@ public class TokenProvider {
      */
     public AuthUser getAuthMember(AuthToken token) {
         var id = getUserToken(token.getToken());
-
         var member = authService.loadUserById(id);
 
         return new AuthUserImpl(member.getId());
