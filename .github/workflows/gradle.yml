@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Clean up temporary files to free space
-        run: rm -rf /tmp/*
+        run: find /tmp -writable -type f -delete
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
