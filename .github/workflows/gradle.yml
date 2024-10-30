@@ -8,14 +8,21 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GIT_TOKEN }}
 
-      - name: Clean up temporary files to free space
-        run: find /tmp -writable -type f -delete
+      - name: Update submodules to latest commit on main branch
+        run: git submodule update --remote
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -23,6 +30,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # gradle caching - 빌드 시간 향상
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -58,6 +66,6 @@ jobs:
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/url-shortener
             sudo docker stop server || true
-            sudo docker rm server || true
+            sudo docker rm server || true # 중복된 이름 문제 해결
             sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/url-shortener
             sudo docker image prune -f
